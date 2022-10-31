@@ -11,14 +11,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="275.0" layoutY="15.0" text="New Furniture">
+      <Label layoutX="264.0" layoutY="14.0" text="Furniture Name">
          <font>
             <Font name="Inter Bold" size="36.0" />
-         </font>
-      </Label>
-      <Label layoutX="200.0" layoutY="75.0" text="Furniture name">
-         <font>
-            <Font name="Inter Bold" size="18.0" />
          </font>
       </Label>
       <AnchorPane layoutX="20.0" layoutY="75.0" prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: gray;">
@@ -26,30 +21,27 @@
             <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
-      <TextField layoutX="200.0" layoutY="100.0" prefHeight="30.0" prefWidth="500.0" />
-      <Label layoutX="200.0" layoutY="150.0" text="Price">
+      <Label layoutX="200.0" layoutY="75.0" text="Price per unit">
          <font>
             <Font name="Inter Bold" size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="200.0" layoutY="175.0" prefHeight="30.0" prefWidth="150.0" />
-      <Label layoutX="400.0" layoutY="150.0" text="Quantity">
+      <Label layoutX="200.0" layoutY="125.0" text="Amount :">
          <font>
             <Font name="Inter Bold" size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="415.0" layoutY="175.0" prefHeight="30.0" prefWidth="50.0" />
-      <Button layoutX="225.0" layoutY="500.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #160042;" text="Add" textFill="WHITE">
+      <Button layoutX="225.0" layoutY="500.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="125.0" style="-fx-background-color: #160042;" text="Add to cart" textFill="WHITE">
          <font>
             <Font name="Inter Bold" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="475.0" layoutY="500.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Cancel">
+      <Button layoutX="475.0" layoutY="500.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="125.0" text="Cancel">
          <font>
             <Font name="Inter Bold" size="16.0" />
          </font>
       </Button>
-      <Label layoutX="30.0" layoutY="250.0" text="Material">
+      <Label layoutX="30.0" layoutY="250.0" text="Material Status:">
          <font>
             <Font name="Inter Bold" size="18.0" />
          </font>
@@ -57,24 +49,45 @@
       <AnchorPane layoutX="30.0" layoutY="275.0" prefHeight="200.0" prefWidth="700.0">
          <children>
             <TableView prefHeight="200.0" prefWidth="700.0">
-              <columns>
-                <TableColumn prefWidth="600.0" text="Name" />
-                <TableColumn prefWidth="100.0" text="Quantity" />
-              </columns>
+               <columns>
+                  <TableColumn prefWidth="600.0" text="Name" />
+                  <TableColumn prefWidth="100.0" text="Quantity" />
+               </columns>
             </TableView>
          </children>
       </AnchorPane>
-      <Button layoutX="580.0" layoutY="220.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #A569BD;" text="Edit Material" textFill="WHITE">
+      <Label layoutX="175.0" layoutY="250.0" prefWidth="200.0" text="Not Ready">
+         <font>
+            <Font name="Inter Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="350.0" layoutY="75.0" prefWidth="200.0" text="Price">
+         <font>
+            <Font name="Inter Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="300.0" layoutY="125.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="-">
          <font>
             <Font name="Inter Bold" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="370.0" layoutY="175.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="-">
+      <Button layoutX="425.0" layoutY="125.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="+">
          <font>
             <Font name="Inter Bold" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="477.0" layoutY="175.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="+">
+      <TextField layoutX="350.0" layoutY="125.0" prefHeight="30.0" prefWidth="50.0" />
+      <Label layoutX="200.0" layoutY="175.0" text="Total Price:">
+         <font>
+            <Font name="Inter Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="350.0" layoutY="175.0" prefWidth="200.0" text="Total Price">
+         <font>
+            <Font name="Inter Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="695.0" layoutY="5.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #A569BD;" text="Edit" textFill="WHITE">
          <font>
             <Font name="Inter Bold" size="16.0" />
          </font>

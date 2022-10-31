@@ -32,7 +32,7 @@
                   <Font name="Inter Bold" size="16.0" />
                </font>
             </Button>
-            <Button layoutY="400.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: #3498DB;" text="Order" textFill="WHITE">
+            <Button layoutY="400.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: #3498DB;" text="Furniture Order" textFill="WHITE">
                <font>
                   <Font name="Inter Bold" size="16.0" />
                </font>
@@ -67,5 +67,15 @@
             <Font name="Inter Regular" size="14.0" />
          </font>
       </Label>
+      <Button layoutY="525.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: #3498DB;" text="Material Order" textFill="WHITE">
+         <font>
+            <Font name="Inter Bold" size="16.0" />
+         </font>
+      </Button>
+      <Button layoutX="190.0" layoutY="30.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #A569BD;" text="Cart" textFill="WHITE">
+         <font>
+            <Font name="Inter Bold" size="16.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

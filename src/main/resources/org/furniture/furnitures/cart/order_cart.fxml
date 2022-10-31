@@ -39,31 +39,27 @@
             </Button>
          </children>
       </AnchorPane>
-      <Label layoutX="634.0" layoutY="20.0" text="Customer List">
+      <Label layoutX="643.0" layoutY="18.0" text="Order Cart">
          <font>
             <Font name="Inter Bold" size="36.0" />
          </font>
       </Label>
       <TextField layoutX="509.0" layoutY="80.0" prefHeight="30.0" prefWidth="500.0" />
-      <Button layoutX="1250.0" layoutY="20.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #A569BD;" text="New" textFill="WHITE">
+      <AnchorPane layoutX="190.0" layoutY="130.0" prefHeight="125.0" prefWidth="1100.0" style="-fx-background-color: #DADADA;" />
+      <AnchorPane layoutX="190.0" layoutY="270.0" prefHeight="125.0" prefWidth="1100.0" style="-fx-background-color: #DADADA;" />
+      <AnchorPane layoutX="190.0" layoutY="410.0" prefHeight="125.0" prefWidth="1100.0" style="-fx-background-color: #DADADA;" />
+      <AnchorPane layoutX="190.0" layoutY="550.0" prefHeight="125.0" prefWidth="1100.0" style="-fx-background-color: #DADADA;" />
+      <Button layoutY="525.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: #3498DB;" text="Material Order" textFill="WHITE">
          <font>
             <Font name="Inter Bold" size="16.0" />
          </font>
       </Button>
-      <AnchorPane layoutX="190.0" layoutY="130.0" prefHeight="125.0" prefWidth="1100.0" style="-fx-background-color: #DADADA;" />
-      <AnchorPane layoutX="190.0" layoutY="270.0" prefHeight="125.0" prefWidth="1100.0" style="-fx-background-color: #DADADA;" />
-      <Button layoutX="489.0" layoutY="720.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="&lt;&lt;" />
-      <Button layoutX="609.0" layoutY="720.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="&lt;" />
-      <Button layoutX="843.0" layoutY="720.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="&gt;" />
-      <Button layoutX="963.0" layoutY="720.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="&gt;&gt;" />
-      <Label layoutX="736.0" layoutY="725.0" text="Page 1">
+      <Button layoutX="190.0" layoutY="30.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #A569BD;" text="Back" textFill="WHITE">
          <font>
-            <Font name="Inter Regular" size="14.0" />
+            <Font name="Inter Bold" size="16.0" />
          </font>
-      </Label>
-      <AnchorPane layoutX="190.0" layoutY="410.0" prefHeight="125.0" prefWidth="1100.0" style="-fx-background-color: #DADADA;" />
-      <AnchorPane layoutX="190.0" layoutY="550.0" prefHeight="125.0" prefWidth="1100.0" style="-fx-background-color: #DADADA;" />
-      <Button layoutY="525.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: #3498DB;" text="Material Order" textFill="WHITE">
+      </Button>
+      <Button layoutX="674.0" layoutY="693.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="125.0" style="-fx-background-color: #160042;" text="Proceed" textFill="WHITE">
          <font>
             <Font name="Inter Bold" size="16.0" />
          </font>

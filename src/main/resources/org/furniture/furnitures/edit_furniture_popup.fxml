@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="290.0" layoutY="25.0" text="Edit Furniture">
@@ -65,5 +64,20 @@
             </TableView>
          </children>
       </AnchorPane>
+      <Button layoutX="590.0" layoutY="230.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #A569BD;" text="Edit Material" textFill="WHITE">
+         <font>
+            <Font name="Inter Bold" size="16.0" />
+         </font>
+      </Button>
+      <Button layoutX="380.0" layoutY="185.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="-">
+         <font>
+            <Font name="Inter Bold" size="16.0" />
+         </font>
+      </Button>
+      <Button layoutX="487.0" layoutY="185.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="+">
+         <font>
+            <Font name="Inter Bold" size="16.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

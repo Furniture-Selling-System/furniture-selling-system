@@ -12,7 +12,7 @@
       <Separator layoutX="150.0" orientation="VERTICAL" prefHeight="768.0" />
       <AnchorPane prefHeight="768.0" prefWidth="150.0" style="-fx-background-color: #FFFAF0;">
          <children>
-            <Label layoutX="5.0" layoutY="5.0" text="Customers">
+            <Label layoutX="5.0" layoutY="5.0" text="Orders">
                <font>
                   <Font name="Inter Bold" size="16.0" />
                </font>
@@ -39,17 +39,12 @@
             </Button>
          </children>
       </AnchorPane>
-      <Label layoutX="634.0" layoutY="20.0" text="Customer List">
+      <Label layoutX="576.0" layoutY="20.0" text="Material Order List">
          <font>
             <Font name="Inter Bold" size="36.0" />
          </font>
       </Label>
       <TextField layoutX="509.0" layoutY="80.0" prefHeight="30.0" prefWidth="500.0" />
-      <Button layoutX="1250.0" layoutY="20.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #A569BD;" text="New" textFill="WHITE">
-         <font>
-            <Font name="Inter Bold" size="16.0" />
-         </font>
-      </Button>
       <AnchorPane layoutX="190.0" layoutY="130.0" prefHeight="125.0" prefWidth="1100.0" style="-fx-background-color: #DADADA;" />
       <AnchorPane layoutX="190.0" layoutY="270.0" prefHeight="125.0" prefWidth="1100.0" style="-fx-background-color: #DADADA;" />
       <Button layoutX="489.0" layoutY="720.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="&lt;&lt;" />
