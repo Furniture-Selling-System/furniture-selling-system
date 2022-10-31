@@ -45,6 +45,11 @@
          </font>
       </Label>
       <TextField layoutX="509.0" layoutY="80.0" prefHeight="30.0" prefWidth="500.0" />
+      <Button layoutX="1250.0" layoutY="20.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #A569BD;" text="New" textFill="WHITE">
+         <font>
+            <Font name="Inter Bold" size="16.0" />
+         </font>
+      </Button>
       <AnchorPane layoutX="489.0" layoutY="150.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #DADADA;" />
       <AnchorPane layoutX="788.0" layoutY="150.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #DADADA;" />
       <AnchorPane layoutX="1087.0" layoutY="150.0" prefHeight="250.0" prefWidth="250.0" style="-fx-background-color: #DADADA;" />
@@ -62,10 +67,5 @@
             <Font name="Inter Regular" size="14.0" />
          </font>
       </Label>
-      <Button layoutX="1250.0" layoutY="20.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #A569BD;" text="New" textFill="WHITE">
-         <font>
-            <Font name="Inter Bold" size="16.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>
