@@ -60,7 +60,7 @@
             <Font name="Inter Bold" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="420.0" layoutY="540.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Discard">
+      <Button layoutX="420.0" layoutY="540.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Cancel">
          <font>
             <Font name="Inter Bold" size="16.0" />
          </font>
