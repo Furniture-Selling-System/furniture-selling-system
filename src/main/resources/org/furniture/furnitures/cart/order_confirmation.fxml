@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="184.0" layoutY="25.0" text="Confirmation">
+         <font>
+            <Font name="Inter Bold" size="36.0" />
+         </font>
+      </Label>
+      <Button layoutX="103.0" layoutY="330.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="125.0" style="-fx-background-color: #160042;" text="Confirm" textFill="WHITE">
+         <font>
+            <Font name="Inter Bold" size="16.0" />
+         </font>
+      </Button>
+      <Button layoutX="353.0" layoutY="330.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="125.0" text="Cancel">
+         <font>
+            <Font name="Inter Bold" size="16.0" />
+         </font>
+      </Button>
+      <Label layoutX="35.0" layoutY="180.0" text="Phone Number:">
+         <font>
+            <Font name="Inter Regular" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="35.0" layoutY="140.0" prefWidth="142.0" text="Total Price:">
+         <font>
+            <Font name="Inter Regular" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="185.0" layoutY="140.0" prefWidth="200.0" text="Total Price">
+         <font>
+            <Font name="Inter Regular" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="35.0" layoutY="100.0" prefWidth="200.0" text="Customer Name">
+         <font>
+            <Font name="Inter Regular" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="185.0" layoutY="180.0" prefWidth="300.0" text="PhoneNumber">
+         <font>
+            <Font name="Inter Regular" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="35.0" layoutY="220.0" text="Address">
+         <font>
+            <Font name="Inter Regular" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="184.0" layoutY="214.0" prefHeight="30.0" prefWidth="400.0" text="Address">
+         <font>
+            <Font name="Inter Regular" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="184.0" layoutY="244.0" prefHeight="30.0" prefWidth="400.0" text="Sub District &amp; District">
+         <font>
+            <Font name="Inter Regular" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="184.0" layoutY="269.0" prefHeight="30.0" prefWidth="400.0" text="Province &amp; Postal Code">
+         <font>
+            <Font name="Inter Regular" size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

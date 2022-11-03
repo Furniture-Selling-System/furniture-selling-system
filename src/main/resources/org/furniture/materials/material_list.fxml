@@ -12,7 +12,7 @@
       <Separator layoutX="150.0" orientation="VERTICAL" prefHeight="768.0" />
       <AnchorPane prefHeight="768.0" prefWidth="150.0" style="-fx-background-color: #FFFAF0;">
          <children>
-            <Label layoutX="5.0" layoutY="5.0" text="Furnitures">
+            <Label layoutX="5.0" layoutY="5.0" text="Materials">
                <font>
                   <Font name="Inter Bold" size="16.0" />
                </font>
@@ -37,9 +37,14 @@
                   <Font name="Inter Bold" size="16.0" />
                </font>
             </Button>
+            <Button layoutY="525.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: #3498DB;" text="Material Order" textFill="WHITE">
+               <font>
+                  <Font name="Inter Bold" size="16.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
-      <Label layoutX="513.0" layoutY="20.0" text="Aluminum &amp; Glass Furniture">
+      <Label layoutX="630.0" layoutY="20.0" text="Material List">
          <font>
             <Font name="Inter Bold" size="36.0" />
          </font>
@@ -67,15 +72,5 @@
             <Font name="Inter Regular" size="14.0" />
          </font>
       </Label>
-      <Button layoutY="525.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="150.0" style="-fx-background-color: #3498DB;" text="Material Order" textFill="WHITE">
-         <font>
-            <Font name="Inter Bold" size="16.0" />
-         </font>
-      </Button>
-      <Button layoutX="190.0" layoutY="30.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #A569BD;" text="Cart" textFill="WHITE">
-         <font>
-            <Font name="Inter Bold" size="16.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>
