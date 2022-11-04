@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.furniture.controllers.create.CreateNewFurnitureController">
+    <children>
+        <Label layoutX="452.0" layoutY="39.0" text="Create New Furniture">
+            <font>
+                <Font size="48.0" />
+            </font>
+        </Label>
+        <Label layoutX="247.0" layoutY="160.0" text="Name">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <TextField fx:id="furnitureNameTextField" layoutX="388.0" layoutY="143.0" prefHeight="66.0" prefWidth="655.0" promptText="furniture name">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </TextField>
+        <Label layoutX="247.0" layoutY="314.0" text="Cost">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <TextField fx:id="costTextField" alignment="CENTER_RIGHT" layoutX="388.0" layoutY="303.0" prefHeight="66.0" prefWidth="218.0">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </TextField>
+        <Button fx:id="cancelBtn" layoutX="50.0" layoutY="655.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel">
+            <font>
+                <Font size="40.0" />
+            </font>
+        </Button>
+        <Button fx:id="createBtn" layoutX="1150.0" layoutY="655.0" mnemonicParsing="false" onAction="#handleCreate" text="Create">
+            <font>
+                <Font size="40.0" />
+            </font>
+        </Button>
+    </children>
+</AnchorPane>

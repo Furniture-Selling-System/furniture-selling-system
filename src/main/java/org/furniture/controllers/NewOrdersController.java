@@ -7,6 +7,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import org.furniture.services.DBConnect;
+
+import java.sql.SQLException;
+import java.util.Collection;
 
 public class NewOrdersController extends AbstractPageController {
     @FXML private TextField searchTextField;
@@ -14,6 +18,19 @@ public class NewOrdersController extends AbstractPageController {
     @FXML private Button cancelButton;
     @FXML private Button confirmButton;
     @FXML private Button createButton;
+
+    private Collection<String> customerName;
+
+    @FXML
+    public void initialize() throws SQLException {
+        customerName = DBConnect.materialNameCollection();
+        showOrderListView();
+    }
+
+    private void showOrderListView() {
+        ordersListView.getItems().addAll(customerName);
+        ordersListView.refresh();
+    }
 
     @FXML
     private void searchTextFieldOnAction(KeyEvent e) {
