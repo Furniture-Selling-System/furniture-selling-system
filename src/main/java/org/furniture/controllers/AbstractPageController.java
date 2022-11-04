@@ -15,6 +15,9 @@ public abstract class AbstractPageController {
     @FXML protected Button furnitureNavigationButton;
     
     @FXML
+    abstract protected void initialize();
+
+    @FXML
     protected void newOrdersNavigationButtonOnAction(ActionEvent e) {
         // TODO
     }

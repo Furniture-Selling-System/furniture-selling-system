@@ -5,19 +5,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
-public class NewOrdersController extends AbstractPageController {
+public class NewOrdersController extends AbstractPageOrderController {
     @FXML private TextField searchTextField;
     @FXML private ListView<String> ordersListView;
     @FXML private Button cancelButton;
     @FXML private Button confirmButton;
     @FXML private Button createButton;
 
+    @Override
     @FXML
-    private void searchTextFieldOnAction(KeyEvent e) {
-        // TODO
+    protected void initialize() {
+        System.out.println("Hello");
     }
 
     @FXML
@@ -31,12 +31,12 @@ public class NewOrdersController extends AbstractPageController {
     }
 
     @FXML
-    private void confirmButtonOnAction (ActionEvent e) {
+    private void createButtonOnAction (ActionEvent e) {
         // TODO
     }
 
-    @FXML
-    private void createButtonOnAction (ActionEvent e) {
-        // TODO
+    @Override
+    protected void confirmButtonOnAction(ActionEvent e) {
+        // TODO Auto-generated method stub
     }
 }
