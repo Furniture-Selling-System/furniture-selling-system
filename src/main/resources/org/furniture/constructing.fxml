@@ -14,8 +14,8 @@
    <children>
       <ToolBar prefHeight="40.0" prefWidth="1366.0">
         <items>
-          <Button fx:id="newOrdersNavigationButton" disable="true" mnemonicParsing="false" text="New Orders" />
-            <Button fx:id="constructingNavigationButton" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#constructingNavigationButtonOnAction" text="Constructing" />
+          <Button fx:id="newOrdersNavigationButton" mnemonicParsing="false" text="New Orders" />
+            <Button fx:id="constructingNavigationButton" disable="true" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#constructingNavigationButtonOnAction" text="Constructing" />
             <Button fx:id="shippingNavigationButton" layoutX="66.0" layoutY="13.0" mnemonicParsing="false" text="Shipping" />
             <Button fx:id="confirmingNavigationButton" layoutX="122.0" layoutY="13.0" mnemonicParsing="false" text="Confirming" />
             <Separator orientation="VERTICAL" />
@@ -29,16 +29,14 @@
       </ToolBar>
       <AnchorPane layoutY="40.0" onContextMenuRequested="#ordersListViewOnAction" prefHeight="728.0" prefWidth="1366.0">
          <children>
-            <Text layoutX="41.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Orders">
+            <Text layoutX="41.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Constructing Orders">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
             <TextField fx:id="searchTextField" layoutX="501.0" layoutY="104.0" onKeyTyped="#searchTextFieldOnAction" prefHeight="25.0" prefWidth="365.0" promptText="Enter customer name to search for orders..." />
             <ListView fx:id="ordersListView" layoutX="104.0" layoutY="175.0" prefHeight="434.0" prefWidth="1159.0" />
-            <Button fx:id="cancelButton" disable="true" layoutX="1043.0" layoutY="671.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" text="Cancel" />
-            <Button fx:id="confirmButton" disable="true" layoutX="1145.0" layoutY="671.0" mnemonicParsing="false" onAction="#confirmButtonOnAction" text="Confirm" />
-            <Button fx:id="createButton" defaultButton="true" layoutX="1244.0" layoutY="671.0" mnemonicParsing="false" onAction="#createButtonOnAction" text="Create" />
+            <Button fx:id="confirmButton" disable="true" layoutX="1220.0" layoutY="670.0" mnemonicParsing="false" onAction="#constructButtonOnAction" text="Construct" />
          </children>
       </AnchorPane>
    </children>
