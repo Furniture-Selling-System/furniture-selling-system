@@ -15,7 +15,6 @@ public class NewOrdersController extends AbstractPageOrderController {
     @FXML private Button createButton;
 
     @Override
-    @FXML
     protected void initialize() {
         System.out.println("Hello");
     }
