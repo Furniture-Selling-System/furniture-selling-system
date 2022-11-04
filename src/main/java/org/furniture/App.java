@@ -10,16 +10,18 @@ import org.furniture.services.DBConnect;
 import java.io.IOException;
 import java.sql.SQLException;
 
+
 /**
  * JavaFX App
  */
 public class App extends Application {
 
     private static Scene scene;
+    private static final String MAIN_MENU = "/org/furniture/new-orders";
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        scene = new Scene(loadFXML(MAIN_MENU), 1366, 768);
         stage.setScene(scene);
         stage.show();
     }
