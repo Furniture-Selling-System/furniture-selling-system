@@ -1,5 +1,10 @@
 package org.furniture.controllers;
 
+import java.io.IOException;
+
+import org.furniture.UIManager;
+import org.furniture.enums.Page;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -18,42 +23,42 @@ public abstract class AbstractPageController {
     abstract protected void initialize();
 
     @FXML
-    protected void newOrdersNavigationButtonOnAction(ActionEvent e) {
-        // TODO
+    protected void newOrdersNavigationButtonOnAction(ActionEvent e) throws IOException {
+        UIManager.setPage(Page.NEW_ORDER_PAGE);
     }
 
     @FXML
-    protected void constructingNavigationButtonOnAction(ActionEvent e) {
-        // TODO
+    protected void constructingNavigationButtonOnAction(ActionEvent e) throws IOException {
+        UIManager.setPage(Page.CONSTRUCT_PAGE);
     }
 
     @FXML
-    protected void shippingNavigationButtonOnAction(ActionEvent e) {
-        // TODO
+    protected void shippingNavigationButtonOnAction(ActionEvent e) throws IOException {
+        UIManager.setPage(Page.SHIP_PAGE);
     }
 
     @FXML
-    protected void confirmingNavigationButtonOnAction(ActionEvent e) {
-        // TODO
+    protected void confirmingNavigationButtonOnAction(ActionEvent e) throws IOException {
+        UIManager.setPage(Page.CONFIRM_PAGE);
     }
 
     @FXML
-    protected void orderHistoryNavigationButtonOnAction(ActionEvent e) {
-        // TODO
+    protected void orderHistoryNavigationButtonOnAction(ActionEvent e) throws IOException {
+        UIManager.setPage(Page.ORDER_HISTORY_PAGE);
     }
 
     @FXML
-    protected void customersNavigationButtonOnAction(ActionEvent e) {
-        // TODO
+    protected void customersNavigationButtonOnAction(ActionEvent e) throws IOException {
+        UIManager.setPage(Page.CUSTOMERS_PAGE);
     }
 
     @FXML
-    protected void materialsNavigationButtonOnAction(ActionEvent e) {
-        // TODO
+    protected void materialsNavigationButtonOnAction(ActionEvent e) throws IOException {
+        UIManager.setPage(Page.MATERIALS_PAGE);
     }
 
     @FXML
-    protected void furnitureNavigationButtonOnAction(ActionEvent e) {
-        // TODO
+    protected void furnitureNavigationButtonOnAction(ActionEvent e) throws IOException {
+        UIManager.setPage(Page.FURNITURE_PAGE);
     }
 }
