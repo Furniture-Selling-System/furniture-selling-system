@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.furniture.controllers.FurnitureController">
+   <children>
+      <ToolBar prefHeight="40.0" prefWidth="1366.0">
+         <items>
+            <Button fx:id="newOrdersNavigationButton" mnemonicParsing="false" onAction="#newOrdersNavigationButtonOnAction" text="New Orders" />
+            <Button fx:id="constructingNavigationButton" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#constructingNavigationButtonOnAction" text="Constructing" />
+            <Button fx:id="shippingNavigationButton" layoutX="66.0" layoutY="13.0" mnemonicParsing="false" onAction="#shippingNavigationButtonOnAction" text="Shipping" />
+            <Button fx:id="confirmingNavigationButton" layoutX="122.0" layoutY="13.0" mnemonicParsing="false" onAction="#confirmingNavigationButtonOnAction" text="Confirming" />
+            <Separator orientation="VERTICAL" />
+            <Button fx:id="orderHistoryNavigationButton" mnemonicParsing="false" onAction="#orderHistoryNavigationButtonOnAction" text="Order History" />
+            <Region prefWidth="700.0" />
+            <Separator orientation="VERTICAL" />
+            <Button fx:id="customersNavigationButton" layoutX="249.0" layoutY="13.0" mnemonicParsing="false" onAction="#customersNavigationButtonOnAction" text="Customers" />
+            <Button fx:id="materialsNavigationButton" layoutX="329.0" layoutY="13.0" mnemonicParsing="false" onAction="#materialsNavigationButtonOnAction" text="Materials" />
+            <Button fx:id="furnitureNavigationButton" disable="true" layoutX="610.0" layoutY="13.0" mnemonicParsing="false" onAction="#furnitureNavigationButtonOnAction" text="Furniture" />
+         </items>
+      </ToolBar>
+      <AnchorPane layoutY="40.0" prefHeight="728.0" prefWidth="1366.0">
+         <children>
+            <Text layoutX="41.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Furniture">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <TextField fx:id="searchTextField" layoutX="171.0" layoutY="133.0" onKeyTyped="#searchTextFieldOnAction" prefHeight="25.0" prefWidth="365.0" promptText="Enter customer name to search for orders..." />
+            <ListView fx:id="ordersListView" layoutX="171.0" layoutY="195.0" prefHeight="434.0" prefWidth="365.0" />
+            <Separator layoutX="680.0" layoutY="80.0" orientation="VERTICAL" prefHeight="615.0" prefWidth="6.0" />
+            <Label layoutX="710.0" layoutY="90.0" text="Add furniture">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="confirmButton" layoutX="1220.0" layoutY="670.0" mnemonicParsing="false" onAction="#confirmButtonOnAction" text="Confirm" />
+            <TextField disable="true" layoutX="924.0" layoutY="146.0" prefHeight="25.0" prefWidth="209.0" />
+            <Label layoutX="788.0" layoutY="146.0" text="furniture id">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="788.0" layoutY="255.0" text="furniture price">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField layoutX="924.0" layoutY="201.0" prefHeight="25.0" prefWidth="209.0" />
+            <Label layoutX="788.0" layoutY="201.0" text="furniture name">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField layoutX="924.0" layoutY="255.0" prefHeight="25.0" prefWidth="75.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

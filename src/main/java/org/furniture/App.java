@@ -5,10 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.furniture.services.DBConnect;
 
 import java.io.IOException;
 import java.sql.SQLException;
+
+import org.furniture.enums.Page;
 
 
 /**
@@ -17,7 +18,7 @@ import java.sql.SQLException;
 public class App extends Application {
 
     private static Scene scene;
-    private static final String MAIN_MENU = "/org/furniture/new-orders";
+    private static final String MAIN_MENU = Page.NEW_ORDER_PAGE.toString();
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -36,9 +37,9 @@ public class App extends Application {
     }
 
     public static void main(String[] args) throws SQLException {
-        DBConnect.loadDriver();
+        // DBConnect.loadDriver();
         launch();
-        DBConnect.closeDriver();
+        // DBConnect.closeDriver();
     }
 
 }
