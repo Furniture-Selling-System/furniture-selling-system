@@ -8,6 +8,9 @@ module org.furniture {
     exports org.furniture;
     exports org.furniture.enums;
 
+    opens org.furniture.controllers.create to javafx.fxml;
+    exports org.furniture.controllers.create;
+
     opens org.furniture.controllers to javafx.fxml;
     exports org.furniture.controllers;
 }
