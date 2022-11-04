@@ -17,7 +17,7 @@ import java.sql.SQLException;
 public class App extends Application {
 
     private static Scene scene;
-    private static final String MAIN_MENU = "/org/furniture/new-orders";
+    private static final String MAIN_MENU = "/org/furniture/create_new_material";
 
     @Override
     public void start(Stage stage) throws IOException {
