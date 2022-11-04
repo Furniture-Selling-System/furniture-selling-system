@@ -2,6 +2,7 @@ package org.furniture.services;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class DBConnect {
@@ -64,6 +65,20 @@ public class DBConnect {
             System.out.println("VendorError: " + ex.getErrorCode());
         }
         return rs;
+    }
+
+    public static void queryUpdate(String codeSQL) {
+        Statement stmt = null;
+
+        try {
+            stmt = conn.createStatement();
+            stmt.executeUpdate(codeSQL);
+
+        } catch (SQLException ex) {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
     }
 
     public void checkStock() throws SQLException {
@@ -140,5 +155,45 @@ public class DBConnect {
                     "WHERE id=" + id);
             printResults(rs);
         }
+    }
+
+    public static Collection<String> customerCollection() {
+        ArrayList<String> arrayList = new ArrayList<>();
+        try {
+            ResultSet rs = null;
+            rs = query("SELECT c.id,c.name FROM customer c");
+
+            while (rs.next()) {
+                arrayList.add(String.format("%1$s : %2$s", rs.getString("id"), rs.getString("name")));
+            }
+        } catch (Exception ignored) {
+
+        }
+        return arrayList;
+    }
+
+    public static Collection<String> furnitureNameCollection() throws SQLException {
+        ResultSet rs = null;
+        rs = query("SELECT f.name FROM furniture f");
+        ArrayList<String> arrayList = new ArrayList<>();
+        while (rs.next()) {
+            arrayList.add(rs.getString("name"));
+        }
+        return arrayList;
+    }
+
+    public static Collection<String> materialCollection(){
+        ArrayList<String> arrayList = new ArrayList<>();
+        try {
+            ResultSet rs = null;
+            rs = query("SELECT m.id,m.name FROM material m");
+
+            while (rs.next()) {
+                arrayList.add(String.format("%1$s : %2$s", rs.getString("id"), rs.getString("name")));
+            }
+        } catch (Exception ignored) {
+
+        }
+        return arrayList;
     }
 }
