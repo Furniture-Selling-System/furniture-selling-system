@@ -43,7 +43,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button fx:id="confirmButton" layoutX="1220.0" layoutY="670.0" mnemonicParsing="false" onAction="#confirmButtonOnAction" text="Confirm" />
+            <Button layoutX="1219.0" layoutY="671.0" mnemonicParsing="false" text="Create" />
             <TextField disable="true" layoutX="924.0" layoutY="146.0" prefHeight="25.0" prefWidth="209.0" />
             <Label layoutX="788.0" layoutY="146.0" text="furniture id">
                <font>
@@ -62,6 +62,7 @@
                </font>
             </Label>
             <TextField layoutX="924.0" layoutY="255.0" prefHeight="25.0" prefWidth="75.0" />
+            <Button fx:id="confirmButton" layoutX="1121.0" layoutY="671.0" mnemonicParsing="false" onAction="#confirmButtonOnAction" text="Confirm" />
          </children>
       </AnchorPane>
    </children>
