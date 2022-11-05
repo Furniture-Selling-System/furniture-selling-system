@@ -8,6 +8,7 @@ import org.furniture.models.Order;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DBConnect {
@@ -256,6 +257,24 @@ public class DBConnect {
                 "WHERE sl.fk_sale_order_id="+ orderID);
     }
 
+    public static HashMap<Furniture,Integer> getFurnitureAmountByOrderID(String orderID){
+        HashMap<Furniture,Integer> furnitureIntegerHashMap = new HashMap<>();
+        ResultSet rs = null;
+        rs = query("SELECT f.id,sl.quantity FROM furniture f\n" +
+                "INNER JOIN sale_order_list sl\n" +
+                "ON sl.fk_furniture_id = f.id\n" +
+                "WHERE sl.fk_sale_order_id="+ orderID);
+        try {
+            while (rs.next()){
+                furnitureIntegerHashMap.put(getFurnitureByID(rs.getString("id")),
+                        rs.getInt("quantity"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return furnitureIntegerHashMap;
+    }
+
     public static List<Material> createMaterialsList(String query){
         List<Material> materialArrayList = new ArrayList<>();
         try {
@@ -387,9 +406,6 @@ public class DBConnect {
     }
 
     public static void test() throws SQLException {
-        for (Material f : getMaterialsByFurnitureID("1")){
-            System.out.println(f);
-        }
     }
 }
 
