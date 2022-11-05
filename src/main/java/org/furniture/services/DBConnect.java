@@ -227,7 +227,7 @@ public class DBConnect {
                     furniture = new Furniture(
                             rs.getString("id"),
                             rs.getString("name"),
-                            Integer.parseInt(rs.getString("price")));
+                            Integer.parseInt(rs.getString("cost")));
                 }
                 furniture.addMaterial(getMaterialByID(rs.getString("m_id")),
                         rs.getInt("spend"));
@@ -247,6 +247,13 @@ public class DBConnect {
     public static List<Furniture> getFurnituresListByName(String name) {
         return createFurnitureList("SELECT f.id FROM furniture f\n" +
                 "WHERE f.name LIKE '%" + name + '%');
+    }
+
+    public static List<Furniture> getFurnitureListByOrderID(String orderID){
+        return createFurnitureList("SELECT f.id FROM furniture f\n" +
+                "INNER JOIN sale_order_list sl\n" +
+                "ON sl.fk_furniture_id = f.id\n" +
+                "WHERE sl.fk_sale_order_id="+ orderID);
     }
 
     public static List<Material> createMaterialsList(String query){
@@ -295,6 +302,13 @@ public class DBConnect {
     public static List<Material> getMaterialsListByName(String name) {
         return createMaterialsList("SELECT m.id,m.name,m.quantity,m.minimum FROM material m\n" +
                 "WHERE m.name LIKE '%" + name + "%'");
+    }
+
+    public static List<Material> getMaterialsByFurnitureID(String furnitureID){
+        return createMaterialsList("SELECT m.id,m.name,m.quantity,m.minimum FROM material m\n" +
+                "INNER JOIN bill_of_material bom\n" +
+                "ON bom.fk_material_id = m.id\n"  +
+                "WHERE bom.fk_furniture_id=" + furnitureID);
     }
 
     public static Material getMaterialByID(String id) {
@@ -372,10 +386,10 @@ public class DBConnect {
         return orderArrayList;
     }
 
-//    public static void test() throws SQLException {
-//        for (Customer c : getCustomersByName("")){
-//            System.out.println(c);
-//        }
-//    }
+    public static void test() throws SQLException {
+        for (Material f : getMaterialsByFurnitureID("1")){
+            System.out.println(f);
+        }
+    }
 }
 

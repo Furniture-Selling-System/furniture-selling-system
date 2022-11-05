@@ -14,6 +14,7 @@ public class Furniture {
         this.id = id;
         this.name = name;
         this.price = price;
+        this.materials = new HashMap<>();
     }
 
     public String getName() {

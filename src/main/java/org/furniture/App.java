@@ -40,7 +40,7 @@ public class App extends Application {
 
     public static void main(String[] args) throws SQLException {
         DBConnect.loadDriver();
-//        DBConnect.test();
+        DBConnect.test();
     //        launch();
         DBConnect.closeDriver();
     }
