@@ -34,7 +34,7 @@
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField fx:id="searchTextField" layoutX="501.0" layoutY="104.0" prefHeight="25.0" prefWidth="365.0" promptText="Enter customer name to search for orders..." />
+            <TextField fx:id="searchTextField" layoutX="501.0" layoutY="104.0" onKeyTyped="#searchTextFieldOnAction" prefHeight="25.0" prefWidth="365.0" promptText="Enter customer name to search for orders..." />
             <ListView fx:id="ordersListView" layoutX="104.0" layoutY="175.0" prefHeight="434.0" prefWidth="1159.0" />
             <Button fx:id="cancelButton" disable="true" layoutX="1043.0" layoutY="671.0" mnemonicParsing="false" text="Cancel" />
             <Button fx:id="confirmButton" disable="true" layoutX="1145.0" layoutY="671.0" mnemonicParsing="false" text="Confirm" />

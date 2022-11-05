@@ -6,11 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import org.furniture.services.DBConnect;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
+import java.util.ArrayList;
 
 public class CustomersController extends AbstractPageController {
 
@@ -20,6 +21,8 @@ public class CustomersController extends AbstractPageController {
     TextField nameTextField;
     @FXML
     TextField phoneTextField;
+    @FXML
+    TextField searchTextField;
 
     @FXML
     TextArea addressTextArea;
@@ -27,22 +30,28 @@ public class CustomersController extends AbstractPageController {
     @FXML
     ListView<String> customerListView;
 
+
     @FXML
     Button confirmButton;
 
-    private Collection<String> customerCollection;
+    private ArrayList<String> customersArrayList;
 
     @Override
     protected void initialize() {
-        customerCollection = DBConnect.customerCollection();
+        customersArrayList = DBConnect.getCustomers();
         showCustomerListView();
         clearSelectedCustomer();
         handleSelectedCustomerListView();
     }
 
     @FXML
-    private void searchTextFieldOnAction(ActionEvent e) {
-        // TODO
+    private void searchTextFieldOnAction(KeyEvent e) {
+        customerListView.getItems().clear();
+        customersArrayList = DBConnect.getCustomersByName(searchTextField.getText());
+        customerListView.getItems().addAll(customersArrayList);
+        customerListView.refresh();
+        if(searchTextField.getText().isEmpty())
+            initialize();
     }
 
     @FXML
@@ -65,8 +74,8 @@ public class CustomersController extends AbstractPageController {
 
     private void showCustomerListView() {
         customerListView.getItems().clear();
-        customerCollection = DBConnect.customerCollection();
-        customerListView.getItems().addAll(customerCollection);
+        customersArrayList = DBConnect.getCustomers();
+        customerListView.getItems().addAll(customersArrayList);
         customerListView.refresh();
     }
 

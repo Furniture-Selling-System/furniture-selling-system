@@ -5,11 +5,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import org.furniture.services.DBConnect;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
+import java.util.ArrayList;
 
 public class MaterialsController extends AbstractPageController {
     @FXML
@@ -21,6 +22,8 @@ public class MaterialsController extends AbstractPageController {
 
     @FXML
     TextField minimumTextField;
+    @FXML
+    TextField searchTextField;
 
     @FXML
     ListView<String> materialListView;
@@ -28,11 +31,11 @@ public class MaterialsController extends AbstractPageController {
     @FXML
     Button confirmButton;
 
-    private Collection<String> materialCollection;
+    private ArrayList<String> materialsArrayList;
 
     @Override
     protected void initialize() {
-        materialCollection = DBConnect.materialCollection();
+        materialsArrayList = DBConnect.getMaterials();
         showMaterialListView();
         clearSelectMaterial();
         handleSelectedMaterialListView();
@@ -70,8 +73,8 @@ public class MaterialsController extends AbstractPageController {
 
     private void showMaterialListView() {
         materialListView.getItems().clear();
-        materialCollection = DBConnect.materialCollection();
-        materialListView.getItems().addAll(materialCollection);
+        materialsArrayList = DBConnect.getMaterials();
+        materialListView.getItems().addAll(materialsArrayList);
         materialListView.refresh();
     }
 
@@ -94,6 +97,16 @@ public class MaterialsController extends AbstractPageController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @FXML
+    private void searchTextFieldOnAction(KeyEvent e){
+        materialListView.getItems().clear();
+        materialsArrayList = DBConnect.getMaterialsByName(searchTextField.getText());
+        materialListView.getItems().addAll(materialsArrayList);
+        materialListView.refresh();
+        if(searchTextField.getText().isEmpty())
+            initialize();
     }
 
 
