@@ -2,7 +2,6 @@ package org.furniture.services;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class DBConnect {
@@ -67,7 +66,7 @@ public class DBConnect {
         return rs;
     }
 
-    public static void queryUpdate(String codeSQL){
+    public static void queryUpdate(String codeSQL) {
         Statement stmt = null;
 
         try {
@@ -157,32 +156,137 @@ public class DBConnect {
         }
     }
 
-        public static Collection<String> customerNameCollection() throws SQLException {
-        ResultSet rs = null;
-        rs = query("SELECT c.name FROM customer c");
+    public static ArrayList<String> getCustomers() {
         ArrayList<String> arrayList = new ArrayList<>();
-        while (rs.next()){
-            arrayList.add(rs.getString("name"));
+        try {
+            ResultSet rs = null;
+            rs = query("SELECT c.id,c.name FROM customer c");
+
+            while (rs.next()) {
+                arrayList.add(String.format("%1$s : %2$s", rs.getString("id"), rs.getString("name")));
+            }
+        } catch (Exception ignored) {
+
         }
         return arrayList;
     }
 
-    public static Collection<String> furnitureNameCollection() throws SQLException {
+    public static ArrayList<String> getCustomersByName(String name) {
+        ArrayList<String> arrayList = new ArrayList<>();
+        try {
+            ResultSet rs = null;
+            rs = query("SELECT c.id,c.name FROM customer c\n" +
+                    "WHERE c.name LIKE '%" + name + "%'");
+
+            while (rs.next()) {
+                arrayList.add(String.format("%1$s : %2$s", rs.getString("id"), rs.getString("name")));
+            }
+        } catch (Exception ignored) {
+
+        }
+        return arrayList;
+    }
+
+    public static ArrayList<String> getFurnitures() throws SQLException {
         ResultSet rs = null;
         rs = query("SELECT f.name FROM furniture f");
         ArrayList<String> arrayList = new ArrayList<>();
-        while (rs.next()){
+        while (rs.next()) {
             arrayList.add(rs.getString("name"));
         }
         return arrayList;
     }
 
-    public static Collection<String> materialNameCollection() throws SQLException {
+    public static ArrayList<String> getFurnituresByName(String name) throws SQLException {
         ResultSet rs = null;
-        rs = query("SELECT m.name FROM material m");
+        rs = query("SELECT f.name FROM furniture f\n" +
+                "WHERE f.name LIKE '%" + name + "'%");
         ArrayList<String> arrayList = new ArrayList<>();
-        while (rs.next()){
+        while (rs.next()) {
             arrayList.add(rs.getString("name"));
+        }
+        return arrayList;
+    }
+
+    public static ArrayList<String> getMaterials(){
+        ArrayList<String> arrayList = new ArrayList<>();
+        try {
+            ResultSet rs = null;
+            rs = query("SELECT m.id,m.name FROM material m");
+
+            while (rs.next()) {
+                arrayList.add(String.format("%1$s : %2$s", rs.getString("id"), rs.getString("name")));
+            }
+        } catch (Exception ignored) {
+
+        }
+        return arrayList;
+    }
+
+    public static ArrayList<String> getMaterialsByName(String name){
+        ArrayList<String> arrayList = new ArrayList<>();
+        try {
+            ResultSet rs = null;
+            rs = query("SELECT m.id,m.name FROM material m\n" +
+                    "WHERE m.name LIKE '%" + name + "%'");
+
+            while (rs.next()) {
+                arrayList.add(String.format("%1$s : %2$s", rs.getString("id"), rs.getString("name")));
+            }
+        } catch (Exception ignored) {
+
+        }
+        return arrayList;
+    }
+
+    public static ArrayList<String> getSaleOrdersByStatus(int status){
+        ArrayList<String> arrayList = new ArrayList<>();
+        try {
+            ResultSet rs = null;
+            rs = query("SELECT so.id,so.c_name,so.cost_total FROM sale_order so\n" +
+                    "WHERE so.furniture_status=" + status);
+
+            while (rs.next()) {
+                arrayList.add(String.format("%1$3s : %2$-50s %3$-7s", rs.getString("id"),
+                        rs.getString("c_name"),
+                        rs.getString("cost_total")));
+            }
+        } catch (Exception ignored) {
+
+        }
+        return arrayList;
+    }
+
+    public static ArrayList<String> getSaleOrders(){
+        ArrayList<String> arrayList = new ArrayList<>();
+        try {
+            ResultSet rs = null;
+            rs = query("SELECT so.id,so.c_name,so.cost_total,so.furniture_status FROM sale_order so");
+            while (rs.next()) {
+                arrayList.add(String.format("%1$3s : %2$-50s %3$-7s status : %4$s", rs.getString("id"),
+                        rs.getString("c_name"),
+                        rs.getString("cost_total"),
+                        rs.getString("furniture_status")));
+            }
+        } catch (Exception ignored) {
+
+        }
+        return arrayList;
+    }
+
+    public static ArrayList<String> getSaleOrdersByName(String name){
+        ArrayList<String> arrayList = new ArrayList<>();
+        try {
+            ResultSet rs = null;
+            rs = query("SELECT so.id,so.c_name,so.cost_total FROM sale_order so\n" +
+                    "WHERE so.c_name LIKE '%" + name + "%'");
+            while (rs.next()) {
+                arrayList.add(String.format("%1$3s : %2$-50s %3$-7s", rs.getString("id"),
+                        rs.getString("c_name"),
+                        rs.getString("cost_total")));
+            }
+        } catch (Exception ignored) {
+
         }
         return arrayList;
     }

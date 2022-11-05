@@ -36,7 +36,7 @@
                </font>
             </Text>
             <TextField fx:id="searchTextField" layoutX="171.0" layoutY="133.0" onKeyTyped="#searchTextFieldOnAction" prefHeight="25.0" prefWidth="365.0" promptText="Enter customer name to search for orders..." />
-            <ListView fx:id="ordersListView" layoutX="171.0" layoutY="195.0" prefHeight="434.0" prefWidth="365.0" />
+            <ListView fx:id="materialListView" layoutX="171.0" layoutY="195.0" prefHeight="434.0" prefWidth="365.0" />
             <Separator layoutX="680.0" layoutY="80.0" orientation="VERTICAL" prefHeight="615.0" prefWidth="6.0" />
             <Label layoutX="710.0" layoutY="90.0" text="Add material">
                <font>
@@ -44,7 +44,7 @@
                </font>
             </Label>
             <Button fx:id="confirmButton" layoutX="1220.0" layoutY="670.0" mnemonicParsing="false" onAction="#confirmButtonOnAction" text="Confirm" />
-            <TextField disable="true" layoutX="924.0" layoutY="146.0" prefHeight="25.0" prefWidth="209.0" />
+            <TextField fx:id="idTextField" disable="true" editable="false" layoutX="928.0" layoutY="146.0" prefHeight="26.0" prefWidth="46.0" />
             <Label layoutX="788.0" layoutY="146.0" text="material id">
                <font>
                   <Font size="16.0" />
@@ -55,13 +55,19 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField layoutX="924.0" layoutY="201.0" prefHeight="25.0" prefWidth="209.0" />
+            <TextField fx:id="nameTextField" layoutX="928.0" layoutY="201.0" prefHeight="25.0" prefWidth="209.0" />
             <Label layoutX="788.0" layoutY="201.0" text="material name">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField layoutX="924.0" layoutY="255.0" prefHeight="25.0" prefWidth="75.0" />
+            <TextField fx:id="quantityTextField" layoutX="928.0" layoutY="255.0" prefHeight="25.0" prefWidth="75.0" />
+            <Label layoutX="788.0" layoutY="307.0" text="minimum material">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="minimumTextField" layoutX="928.0" layoutY="307.0" prefHeight="25.0" prefWidth="75.0" />
          </children>
       </AnchorPane>
    </children>
