@@ -335,6 +335,12 @@ public class DBConnect {
                 "WHERE m.id=" + id);
     }
 
+    public static List<Material> checkMaterialUnderMinimum(){
+        return createMaterialsList("SELECT m.id,m.name,m.quantity,m.minimum FROM material m\n" +
+                "WHERE m.quantity < m.minimum");
+
+    }
+
     public static List<Order> getSaleOrdersByStatus(OrderStatus orderStatus) {
         ArrayList<Order> arrayList = new ArrayList<>();
         try {
@@ -359,11 +365,11 @@ public class DBConnect {
         return arrayList;
     }
 
-    public static ArrayList<Order> getSaleOrders() {
+    private static List<Order> createSaleOrdersList(String query) {
         ArrayList<Order> orderArrayList = new ArrayList<>();
         try {
             ResultSet rs = null;
-            rs = query("SELECT so.id,so.fk_customer_id,so.c_name,so.c_address,so.cost_total,so.create_date,so.furniture_status FROM sale_order so\n");
+            rs = query(query);
 
             while (rs.next()) {
                 orderArrayList.add(
@@ -382,30 +388,84 @@ public class DBConnect {
         return orderArrayList;
     }
 
-    public static ArrayList<Order> getSaleOrdersByCName(String name) {
-        ArrayList<Order> orderArrayList = new ArrayList<>();
+    public static List<Order> getSaleOrdersList(){
+        return createSaleOrdersList("SELECT so.id,so.fk_customer_id,so.c_name,so.c_address," +
+                "so.cost_total,so.create_date,so.furniture_status FROM sale_order so\n");
+    }
+
+    public static List<Order> getSaleOrdersByCName(String name) {
+        return createSaleOrdersList("SELECT so.id,so.fk_customer_id,so.c_name,so.c_address,so.cost_total,so.create_date,so.furniture_status FROM sale_order so\n" +
+                "WHERE c_name LIKE '%" + name + "'%");
+    }
+
+    public static boolean checkOrderCanBeConstruction(String id){
         try {
-            ResultSet rs = null;
-            rs = query("SELECT so.id,so.fk_customer_id,so.c_name,so.c_address,so.cost_total,so.create_date,so.furniture_status FROM sale_order so\n" +
-                    "WHERE c_name LIKE '%" + name + "'%");
-            while (rs.next()) {
-                orderArrayList.add(
-                        new Order(rs.getString("id"),
-                                rs.getString("c_name"),
-                                rs.getInt("cost_total"),
-                                rs.getString("c_address"),
-                                rs.getDate("create_date"),
-                                OrderStatus.findStatus(rs.getInt("furniture_status")),
-                                getCustomersByID(rs.getString("ID"))
-                        ));
+            ResultSet rs = query("SELECT SUM(IF(quantity > sum_spend,0,-1)) check_status \n" +
+                    "   FROM (SELECT m.id m_id,SUM(bom.spend) sum_spend,m.quantity FROM sale_order_list AS ol\n" +
+                    "                           INNER JOIN sale_order AS so\n" +
+                    "                               ON so.id = ol.fk_sale_order_id\n" +
+                    "                           INNER JOIN furniture AS f\n" +
+                    "                               ON f.id = ol.fk_furniture_id\n" +
+                    "                           INNER JOIN bill_of_material AS bom\n" +
+                    "                               ON bom.fk_furniture_id = f.id\n" +
+                    "                           INNER JOIN material AS m\n" +
+                    "                               ON m.id = bom.fk_material_id\n" +
+                    "                          WHERE so.id = " + id + "\n" +
+                    "                          GROUP BY m.id) statusTable");
+            rs.next();
+            return rs.getInt("check_status") >= 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void changeSaleOrderToConstruction(String orderID){
+        if(checkOrderCanBeConstruction(orderID)){
+            try {
+                query("UPDATE sale_order\n" +
+                        "SET furniture_status=" + OrderStatus.CONSTURCTING + "\n" +
+                        "WHERE id=" + orderID);
+                ResultSet rs = query("SELECT m.id m_id,SUM(bom.spend) sum_spend,m.quantity FROM sale_order_list AS ol\n" +
+                        "                           INNER JOIN sale_order AS so\n" +
+                        "                               ON so.id = ol.fk_sale_order_id\n" +
+                        "                           INNER JOIN furniture AS f\n" +
+                        "                               ON f.id = ol.fk_furniture_id\n" +
+                        "                           INNER JOIN bill_of_material AS bom\n" +
+                        "                               ON bom.fk_furniture_id = f.id\n" +
+                        "                           INNER JOIN material AS m\n" +
+                        "                               ON m.id = bom.fk_material_id\n" +
+                        "                          WHERE so.id = " + orderID + "\n" +
+                        "                          GROUP BY m.id"
+                );
+
+                while (rs.next()) {
+                    query("UPDATE material\n" +
+                            "SET quantity=" + (rs.getInt("quantity") - rs.getInt("sum_spend")) +
+                            "WHERE id=" + rs.getInt("m_id"));
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-        } catch (Exception ignored) {
 
         }
-        return orderArrayList;
     }
+    public static boolean updateOrder(String orderID,OrderStatus status){
+        try {
+              queryUpdate("UPDATE sale_order\n" +
+                    "SET furniture_status='" + status.getStatus() + "'\n" +
+                    "WHERE id=" + orderID);
+              return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+//    public static List<Order> checkMaterialForOrderByOrderID(String id){
+//        return crea
+//    }
 
     public static void test() throws SQLException {
+        System.out.println(checkOrderCanBeConstruction("3"));
     }
 }
 
