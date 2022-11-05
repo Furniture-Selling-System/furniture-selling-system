@@ -10,7 +10,9 @@ public enum Page {
 
     CUSTOMERS_PAGE      ("/org/furniture/customers"),
     FURNITURE_PAGE      ("/org/furniture/furniture"),
-    MATERIALS_PAGE      ("/org/furniture/materials");
+    MATERIALS_PAGE      ("/org/furniture/materials"),
+
+    CREATE_ORDER_PAGE   ("/org/furniture/create-new-orders");
 
     private String fxml;
 

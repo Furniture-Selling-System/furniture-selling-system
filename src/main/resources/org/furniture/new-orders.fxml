@@ -28,8 +28,27 @@
             <Button fx:id="furnitureNavigationButton" layoutX="610.0" layoutY="13.0" mnemonicParsing="false" onAction="#furnitureNavigationButtonOnAction" text="Furniture" />
          </items>
       </ToolBar>
-      <AnchorPane layoutY="40.0" onContextMenuRequested="#ordersListViewOnAction" prefHeight="728.0" prefWidth="1366.0">
+      <AnchorPane layoutY="40.0" prefHeight="728.0" prefWidth="1366.0">
          <children>
+            <AnchorPane prefHeight="728.0" prefWidth="1366.0">
+               <children>
+                  <Separator layoutX="6.0" layoutY="405.0" prefHeight="3.0" prefWidth="685.0" />
+                  <TableView fx:id="furnitureTableView" layoutX="169.0" layoutY="444.0" prefHeight="209.0" prefWidth="359.0">
+                     <columns>
+                        <TableColumn fx:id="furnitureIdTableColumn" prefWidth="81.0" text="Furniture ID" />
+                        <TableColumn fx:id="furnitureNameTableColumn" prefWidth="183.0" text="Furniture Name" />
+                        <TableColumn fx:id="furnitureQuantityTableColumn" prefWidth="93.0" text="Quantity" />
+                     </columns>
+                  </TableView>
+                  <TableView fx:id="materialsTableView" layoutX="819.0" layoutY="114.0" prefHeight="395.0" prefWidth="359.0">
+                     <columns>
+                        <TableColumn fx:id="materialIdTableColumn" prefWidth="81.0" text="Material ID" />
+                        <TableColumn fx:id="materialNameTableColumn" prefWidth="183.0" text="Material Name" />
+                        <TableColumn fx:id="materialQuantityTableColumn" prefWidth="93.0" text="Quantity" />
+                     </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
             <Text layoutX="41.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Orders">
                <font>
                   <Font size="24.0" />
@@ -38,34 +57,18 @@
             <Button fx:id="cancelButton" disable="true" layoutX="1043.0" layoutY="671.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" text="Cancel" />
             <Button fx:id="confirmButton" disable="true" layoutX="1145.0" layoutY="671.0" mnemonicParsing="false" onAction="#confirmButtonOnAction" text="Confirm" />
             <Button fx:id="createButton" defaultButton="true" layoutX="1244.0" layoutY="671.0" mnemonicParsing="false" onAction="#createButtonOnAction" text="Create" />
-            <AnchorPane prefHeight="728.0" prefWidth="1366.0">
-               <children>
-                  <Separator layoutX="6.0" layoutY="405.0" prefHeight="3.0" prefWidth="685.0" />
-                  <TableView layoutX="169.0" layoutY="444.0" prefHeight="209.0" prefWidth="359.0">
-                     <columns>
-                        <TableColumn prefWidth="81.0" text="Furniture ID" />
-                        <TableColumn prefWidth="183.0" text="Furniture Name" />
-                        <TableColumn prefWidth="93.0" text="Quantity" />
-                     </columns>
-                  </TableView>
-                  <TableView layoutX="819.0" layoutY="114.0" prefHeight="395.0" prefWidth="359.0">
-                     <columns>
-                        <TableColumn prefWidth="81.0" text="Material ID" />
-                        <TableColumn prefWidth="183.0" text="Material Name" />
-                        <TableColumn prefWidth="93.0" text="Quantity" />
-                     </columns>
-                  </TableView>
-               </children>
-            </AnchorPane>
          </children>
       </AnchorPane>
       <TextField fx:id="searchTextField" layoutX="227.0" layoutY="166.0" onKeyTyped="#searchTextFieldOnAction" prefHeight="25.0" prefWidth="265.0" promptText="Enter customer name to search for orders..." />
-      <TableView layoutX="132.0" layoutY="215.0" prefHeight="209.0" prefWidth="455.0">
+      <TableView fx:id="ordersTableView" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="132.0" layoutY="215.0" onMouseClicked="#ordersTableViewOnMouseClicked" prefHeight="209.0" prefWidth="455.0" scaleShape="false">
          <columns>
-            <TableColumn prefWidth="75.0" text="Order ID" />
-            <TableColumn prefWidth="189.0" text="Customer Name" />
-            <TableColumn prefWidth="189.0" text="Order Date" />
+            <TableColumn fx:id="orderIdTableColumn" editable="false" prefWidth="75.0" text="Order ID" />
+            <TableColumn fx:id="customerNameTableColumn" editable="false" prefWidth="189.0" text="Customer Name" />
+            <TableColumn fx:id="orderDateTableColumn" editable="false" prefWidth="189.0" text="Order Date" />
          </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
       <Separator layoutX="700.0" layoutY="73.0" orientation="VERTICAL" prefHeight="642.0" prefWidth="6.0" />
    </children>
