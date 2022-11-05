@@ -15,6 +15,18 @@ public class Order {
 
     private Customer customer;
 
+    public Order(String name, double totalPrice, String address, LocalDateTime creationDateTime, OrderStatus status) {
+        this.name = name;
+        this.totalPrice = totalPrice;
+        this.address = address;
+        this.creationDateTime = creationDateTime;
+        this.status = status;
+    }
+
+    public void addFurniture(Furniture furniture, int quantity) {
+        furnitures.put(furniture, quantity);
+    }
+
     public double calculateTotalPrice() {
         totalPrice = 0;
         for (Furniture furniture : furnitures.keySet()) {
