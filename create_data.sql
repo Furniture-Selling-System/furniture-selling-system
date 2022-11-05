@@ -1,7 +1,7 @@
 INSERT INTO customer(name,address,phone)VALUES
-('Blago Magdalena','50 Cox Way #1 Bolivar, Tennessee(TN), 38008','067-1215513'),
-('Mór Bo','19 Brown Rd Corning, New York(NY), 14830','063-8342876'),
-('Philomena Zaccharias','3790 Swoboda Rd Verona, Wisconsin(WI), 53593','067-1381218');
+('Blago Magdalena','50 Cox Way #1 Bolivar, Tennessee(TN), 38008','0671215513'),
+('Mór Bo','19 Brown Rd Corning, New York(NY), 14830','0638342876'),
+('Philomena Zaccharias','3790 Swoboda Rd Verona, Wisconsin(WI), 53593','0671381218');
 
 INSERT INTO material(name,quantity,minimum) VALUES
 ('ฉากอลูมิเนียม 2นิ้ว x 2นิ้ว',50,10),
@@ -14,10 +14,10 @@ INSERT INTO material(name,quantity,minimum) VALUES
 ('แผ่นบังรางแขวน',0,1),
 ('กระจกใส หนา 5 มิล',3,3);
 
-INSERT INTO furniture(name,sale) VALUES
+INSERT INTO furniture(name,cost) VALUES
 ('ตู้กระจกใส 3 มิล',2800),
-('ประตูบานเลื่อนแขวน',8000);
-('ตู้กระจกใส 5 มิล',3500)
+('ประตูบานเลื่อนแขวน',8000),
+('ตู้กระจกใส 5 มิล',3500);
 
 INSERT INTO sale_order(fk_customer_id,c_name,c_address,cost_total) VALUES
 (1,'Blago Magdalena','50 Cox Way #1 Bolivar, Tennessee(TN), 38008',2800),
