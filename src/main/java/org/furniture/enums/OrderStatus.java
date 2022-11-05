@@ -17,4 +17,16 @@ public enum OrderStatus {
     public int getStatus() {
         return this.status;
     }
+
+    public static OrderStatus findStatus(int status) {
+        switch (status) {
+            case (0): return WAITING;
+            case (1): return CONSTURCTING;
+            case (2): return SHIPPING;
+            case (3): return CONFIRMING;
+            case (8): return CANCELLED;
+            case (9): return DONE;
+            default: return null;
+        }
+    }
 }

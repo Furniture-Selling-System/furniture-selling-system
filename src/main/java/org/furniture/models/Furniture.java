@@ -3,11 +3,15 @@ package org.furniture.models;
 import java.util.HashMap;
 
 public class Furniture {
+
+    private String id;
     private String name;
-    private double price;
+    private int price;
     private HashMap<Material, Integer> materials;
 
-    public Furniture(String name, double price) {
+
+    public Furniture(String id, String name, int price) {
+        this.id = id;
         this.name = name;
         this.price = price;
     }
@@ -32,7 +36,25 @@ public class Furniture {
         return this.price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Furniture{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", materials=" + materials +
+                '}';
     }
 }

@@ -1,26 +1,31 @@
 package org.furniture.models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.furniture.enums.OrderStatus;
 
 public class Order {
+
+    private String id;
     private String name;
-    private double totalPrice;
+    private int totalPrice;
     private HashMap<Furniture, Integer> furnitures;
     private String address;
-    private LocalDateTime creationDateTime;
+    private Date creationDateTime;
     private OrderStatus status;
-
     private Customer customer;
 
-    public Order(String name, double totalPrice, String address, LocalDateTime creationDateTime, OrderStatus status) {
+    public Order(String id, String name, int totalPrice, String address, Date creationDateTime, OrderStatus status, Customer customer) {
+        this.id = id;
         this.name = name;
         this.totalPrice = totalPrice;
         this.address = address;
         this.creationDateTime = creationDateTime;
         this.status = status;
+        this.customer = customer;
     }
 
     public void addFurniture(Furniture furniture, int quantity) {
@@ -47,7 +52,7 @@ public class Order {
         return furnitures;
     }
 
-    public double getTotalPrice() {
+    public int getTotalPrice() {
         return totalPrice;
     }
 
@@ -55,7 +60,7 @@ public class Order {
         return status;
     }
 
-    public LocalDateTime getCreationDateTime() {
+    public Date getCreationDateTime() {
         return creationDateTime;
     }
 
@@ -65,5 +70,19 @@ public class Order {
 
     public Customer getCustomer() {
         return customer;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", totalPrice=" + totalPrice +
+                ", furnitures=" + furnitures +
+                ", address='" + address + '\'' +
+                ", creationDateTime=" + creationDateTime +
+                ", status=" + status +
+                ", customer=" + customer +
+                '}';
     }
 }
