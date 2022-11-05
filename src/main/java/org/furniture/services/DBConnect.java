@@ -87,56 +87,69 @@ public class DBConnect {
         }
     }
 
-    public void checkStock() throws SQLException {
-        ResultSet rs = null;
-        String SQL_0 = "SELECT id FROM sale_order so WHERE so.furniture_status=0";
-        rs = query(SQL_0);
-        List<Integer> idSaleOrderStatus0 = new ArrayList<>();
-        while (rs.next()) {
-            idSaleOrderStatus0.add(rs.getInt("id"));
-        }
-        for (int id : idSaleOrderStatus0) {
-            rs = query("SELECT *,sum(IF(quantity > sum_spend,0,-1)) status FROM (SELECT so.id so_id,m.id m_id,SUM(spend) sum_spend,m.quantity\n" +
-                    "FROM sale_order_list AS ol\n" +
-                    "   INNER JOIN sale_order AS so\n" +
-                    "       ON so.id = ol.fk_sale_order_id\n" +
-                    "   INNER JOIN furniture AS f\n" +
-                    "       ON f.id = ol.fk_furniture_id\n" +
-                    "   INNER JOIN bill_of_material AS bom\n" +
-                    "       ON bom.fk_furniture_id = f.id\n" +
-                    "   INNER JOIN material AS m\n" +
-                    "       ON m.id = bom.fk_material_id\n" +
-                    "WHERE so.id=" + id + "\n" +
-                    "GROUP BY so_id,m.id\n" +
-                    "ORDER BY m.id) temp"
-            );
-            rs.next();
-            System.out.println(rs.getInt("status"));
-            if (rs.getInt("status") == 0) {
-                query("UPDATE sale_order\n" +
-                        "SET furniture_status=1\n" +
-                        "WHERE id=" + id);
-                rs = query("SELECT so.id so_id,m.id m_id,SUM(spend) sum_spend,m.quantity\n" +
-                        "FROM sale_order_list AS ol\n" +
-                        "   INNER JOIN sale_order AS so\n" +
-                        "       ON so.id = ol.fk_sale_order_id\n" +
-                        "   INNER JOIN furniture AS f\n" +
-                        "       ON f.id = ol.fk_furniture_id\n" +
-                        "   INNER JOIN bill_of_material AS bom\n" +
-                        "       ON bom.fk_furniture_id = f.id\n" +
-                        "   INNER JOIN material AS m\n" +
-                        "       ON m.id = bom.fk_material_id\n" +
-                        "WHERE so.id=" + id + "\n" +
-                        "GROUP BY so_id,m.id\n" +
-                        "ORDER BY m.id"
-                );
-
-                while (rs.next()) {
-                    query("UPDATE material\n" +
-                            "SET quantity=" + (rs.getInt("quantity") - rs.getInt("sum_spend")) +
-                            "WHERE id=" + rs.getInt("m_id"));
-                }
+    public static HashMap<Material, Integer> getAmountMaterialNeedAddToStock() {
+        HashMap<Material, Integer> materialIntegerHashMap = new HashMap<>();
+        try {
+            ResultSet rs = null;
+            List<String> idMaterialFirstTable = new ArrayList<>();
+            rs = query("SELECT m_id,minimum - (quantity - sum_spend) need  FROM (SELECT m.id m_id,SUM(bom.spend) sum_spend,m.quantity,m.minimum FROM sale_order_list AS ol\n" +
+                    "                           INNER JOIN sale_order AS so\n" +
+                    "                               ON so.id = ol.fk_sale_order_id\n" +
+                    "                           INNER JOIN furniture AS f\n" +
+                    "                               ON f.id = ol.fk_furniture_id\n" +
+                    "                           INNER JOIN bill_of_material AS bom\n" +
+                    "                               ON bom.fk_furniture_id = f.id\n" +
+                    "                           INNER JOIN material AS m\n" +
+                    "                               ON m.id = bom.fk_material_id\n" +
+                    "                          WHERE so.furniture_status = 0\n" +
+                    "                          GROUP BY m.id) product_spend_table\n" +
+                    "                          WHERE minimum - (quantity - sum_spend) > 0 ");
+            while (rs.next()) {
+                materialIntegerHashMap.put(getMaterialByID(rs.getString("m_id")),
+                        rs.getInt("need"));
+                idMaterialFirstTable.add(rs.getString("m_id"));
             }
+
+            rs = query("SELECT m.id,m.minimum - m.quantity need\n" +
+                    "FROM material m\n" +
+                    "WHERE m.minimum > m.quantity");
+
+            while (rs.next()) {
+                if (! idMaterialFirstTable.contains(rs.getString("id")))
+                    materialIntegerHashMap.put(getMaterialByID(rs.getString("id")), rs.getInt("need"));
+            }
+            return materialIntegerHashMap;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static List<String> getIDMaterailNeedToAddToStock() {
+        List<String> listID = new ArrayList<>();
+        try {
+            ResultSet rs = null;
+            rs = query("SELECT m_id  FROM (SELECT m.id m_id,SUM(bom.spend) sum_spend,m.quantity,m.minimum FROM sale_order_list AS ol\n" +
+                    "                           INNER JOIN sale_order AS so\n" +
+                    "                               ON so.id = ol.fk_sale_order_id\n" +
+                    "                           INNER JOIN furniture AS f\n" +
+                    "                               ON f.id = ol.fk_furniture_id\n" +
+                    "                           INNER JOIN bill_of_material AS bom\n" +
+                    "                               ON bom.fk_furniture_id = f.id\n" +
+                    "                           INNER JOIN material AS m\n" +
+                    "                               ON m.id = bom.fk_material_id\n" +
+                    "                          WHERE so.furniture_status = 0\n" +
+                    "                          GROUP BY m.id) product_spend_table\n" +
+                    "                          WHERE minimum - (quantity - sum_spend) > 0 \n" +
+                    "                          UNION\n" +
+                    "                          SELECT m.id\n" +
+                    "                          FROM material m\n" +
+                    "                          WHERE m.minimum > m.quantity");
+            while (rs.next()) {
+                listID.add(rs.getString("m_id"));
+            }
+            return listID;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -213,7 +226,7 @@ public class DBConnect {
         return furnitureArrayList;
     }
 
-    private static Furniture createFurniture(String condition){
+    private static Furniture createFurniture(String condition) {
         ResultSet rs = null;
         rs = query("SELECT f.id,f.cost,f.name,bom.spend,m.name m_name,m.id m_id FROM furniture f\n" +
                 "INNER JOIN bill_of_material bom\n" +
@@ -239,33 +252,35 @@ public class DBConnect {
         return furniture;
     }
 
-    public static Furniture getFurnitureByID(String id){
+    public static Furniture getFurnitureByID(String id) {
         return createFurniture("WHERE f.id =" + id);
     }
+
     public static List<Furniture> getFurnituresList() {
         return createFurnitureList("SELECT f.id FROM furniture f");
     }
+
     public static List<Furniture> getFurnituresListByName(String name) {
         return createFurnitureList("SELECT f.id FROM furniture f\n" +
                 "WHERE f.name LIKE '%" + name + '%');
     }
 
-    public static List<Furniture> getFurnitureListByOrderID(String orderID){
+    public static List<Furniture> getFurnitureListByOrderID(String orderID) {
         return createFurnitureList("SELECT f.id FROM furniture f\n" +
                 "INNER JOIN sale_order_list sl\n" +
                 "ON sl.fk_furniture_id = f.id\n" +
-                "WHERE sl.fk_sale_order_id="+ orderID);
+                "WHERE sl.fk_sale_order_id=" + orderID);
     }
 
-    public static HashMap<Furniture,Integer> getFurnitureAmountByOrderID(String orderID){
-        HashMap<Furniture,Integer> furnitureIntegerHashMap = new HashMap<>();
+    public static HashMap<Furniture, Integer> getFurnitureAmountByOrderID(String orderID) {
+        HashMap<Furniture, Integer> furnitureIntegerHashMap = new HashMap<>();
         ResultSet rs = null;
         rs = query("SELECT f.id,sl.quantity FROM furniture f\n" +
                 "INNER JOIN sale_order_list sl\n" +
                 "ON sl.fk_furniture_id = f.id\n" +
-                "WHERE sl.fk_sale_order_id="+ orderID);
+                "WHERE sl.fk_sale_order_id=" + orderID);
         try {
-            while (rs.next()){
+            while (rs.next()) {
                 furnitureIntegerHashMap.put(getFurnitureByID(rs.getString("id")),
                         rs.getInt("quantity"));
             }
@@ -275,7 +290,7 @@ public class DBConnect {
         return furnitureIntegerHashMap;
     }
 
-    public static List<Material> createMaterialsList(String query){
+    public static List<Material> createMaterialsList(String query) {
         List<Material> materialArrayList = new ArrayList<>();
         try {
             ResultSet rs = null;
@@ -295,7 +310,7 @@ public class DBConnect {
         return materialArrayList;
     }
 
-    public static Material createMaterial(String query){
+    public static Material createMaterial(String query) {
         Material material = null;
 
         try {
@@ -323,10 +338,10 @@ public class DBConnect {
                 "WHERE m.name LIKE '%" + name + "%'");
     }
 
-    public static List<Material> getMaterialsByFurnitureID(String furnitureID){
+    public static List<Material> getMaterialsByFurnitureID(String furnitureID) {
         return createMaterialsList("SELECT m.id,m.name,m.quantity,m.minimum FROM material m\n" +
                 "INNER JOIN bill_of_material bom\n" +
-                "ON bom.fk_material_id = m.id\n"  +
+                "ON bom.fk_material_id = m.id\n" +
                 "WHERE bom.fk_furniture_id=" + furnitureID);
     }
 
@@ -335,7 +350,7 @@ public class DBConnect {
                 "WHERE m.id=" + id);
     }
 
-    public static List<Material> checkMaterialUnderMinimum(){
+    public static List<Material> checkMaterialUnderMinimum() {
         return createMaterialsList("SELECT m.id,m.name,m.quantity,m.minimum FROM material m\n" +
                 "WHERE m.quantity < m.minimum");
 
@@ -388,7 +403,7 @@ public class DBConnect {
         return orderArrayList;
     }
 
-    public static List<Order> getSaleOrdersList(){
+    public static List<Order> getSaleOrdersList() {
         return createSaleOrdersList("SELECT so.id,so.fk_customer_id,so.c_name,so.c_address," +
                 "so.cost_total,so.create_date,so.furniture_status FROM sale_order so\n");
     }
@@ -398,7 +413,7 @@ public class DBConnect {
                 "WHERE c_name LIKE '%" + name + "'%");
     }
 
-    public static boolean checkOrderCanBeConstruction(String id){
+    public static boolean checkOrderCanBeConstruction(String id) {
         try {
             ResultSet rs = query("SELECT SUM(IF(quantity > sum_spend,0,-1)) check_status \n" +
                     "   FROM (SELECT m.id m_id,SUM(bom.spend) sum_spend,m.quantity FROM sale_order_list AS ol\n" +
@@ -419,8 +434,8 @@ public class DBConnect {
         }
     }
 
-    private static void changeSaleOrderToConstruction(String orderID){
-        if(checkOrderCanBeConstruction(orderID)){
+    private static void changeSaleOrderToConstruction(String orderID) {
+        if (checkOrderCanBeConstruction(orderID)) {
             try {
                 query("UPDATE sale_order\n" +
                         "SET furniture_status=" + OrderStatus.CONSTURCTING + "\n" +
@@ -449,12 +464,13 @@ public class DBConnect {
 
         }
     }
-    public static boolean updateOrder(String orderID,OrderStatus status){
+
+    public static boolean updateOrder(String orderID, OrderStatus status) {
         try {
-              queryUpdate("UPDATE sale_order\n" +
+            queryUpdate("UPDATE sale_order\n" +
                     "SET furniture_status='" + status.getStatus() + "'\n" +
                     "WHERE id=" + orderID);
-              return true;
+            return true;
         } catch (Exception e) {
             return false;
         }
@@ -465,7 +481,12 @@ public class DBConnect {
 //    }
 
     public static void test() throws SQLException {
-        System.out.println(checkOrderCanBeConstruction("3"));
+//        HashMap<Material,Integer> materialIntegerHashMap = getAmountMaterialNeedAddToStock();
+//        for(Material m : materialIntegerHashMap.keySet()) {
+//            System.out.println("M : " + m.toString());
+//            System.out.println("Need : " + materialIntegerHashMap.get(m));
+//        }
+//        System.out.println(materialIntegerHashMap.size());
     }
 }
 
