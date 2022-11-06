@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DBConnect {
     private static Connection conn;
@@ -356,51 +357,53 @@ public class DBConnect {
 
     }
 
-    public static List<Order> getSaleOrdersByStatus(OrderStatus orderStatus) {
-        ArrayList<Order> arrayList = new ArrayList<>();
-        try {
-            ResultSet rs = null;
-            rs = query("SELECT so.id,so.fk_customer_id,so.c_name,so.c_address,so.cost_total,so.create_date FROM sale_order so\n" +
-                    "WHERE so.furniture_status=" + orderStatus.getStatus());
-
-            while (rs.next()) {
-                arrayList.add(
-                        new Order(rs.getString("id"),
-                                rs.getString("c_name"),
-                                rs.getInt("cost_total"),
-                                rs.getString("c_address"),
-                                rs.getDate("create_date"),
-                                orderStatus,
-                                getCustomersByID(rs.getString("ID"))
-                        ));
-            }
-        } catch (Exception ignored) {
-
-        }
-        return arrayList;
-    }
-
-    private static List<Order> createSaleOrdersList(String query) {
+    private static List<Order> createSaleOrdersList(String condition) {
         ArrayList<Order> orderArrayList = new ArrayList<>();
         try {
             ResultSet rs = null;
-            rs = query(query);
+            rs = query(condition);
 
             while (rs.next()) {
-                orderArrayList.add(
-                        new Order(rs.getString("id"),
-                                rs.getString("c_name"),
-                                rs.getInt("cost_total"),
-                                rs.getString("c_address"),
-                                rs.getDate("create_date"),
-                                OrderStatus.findStatus(rs.getInt("furniture_status")),
-                                getCustomersByID(rs.getString("ID"))
-                        ));
+                orderArrayList.add(createOrderByID(rs.getString("id")));
             }
         } catch (Exception ignored) {
 
         }
         return orderArrayList;
+    }
+
+    public static Order createOrderByID(String orderID){
+        Order order = null;
+        try {
+            ResultSet rs = null;
+            rs = query("SELECT so.id,so.fk_customer_id,so.c_name," +
+                    "so.c_address,so.cost_total,so.create_date,so.furniture_status," +
+                    "fk_furniture_id fk_id,ol.quantity FROM sale_order so\n" +
+                    "INNER JOIN sale_order_list ol\n" +
+                    "ON ol.fk_sale_order_id = so.id\n" +
+                    "WHERE so.id=" + orderID);
+            while (rs.next()) {
+                if (order == null){
+                    order = new Order(rs.getString("id"),
+                            rs.getString("c_name"),
+                            rs.getInt("cost_total"),
+                            rs.getString("c_address"),
+                            rs.getDate("create_date"),
+                            OrderStatus.findStatus(rs.getInt("furniture_status")),
+                            getCustomersByID(rs.getString("ID")));
+                }
+                order.addFurniture(getFurnitureByID(rs.getString("fk_id")),
+                        rs.getInt("quantity"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return order;
+    }
+
+    public static List<Order> getSaleOrdersByStatus(OrderStatus orderStatus) {
+        return createSaleOrdersList("SELECT so.id FROM sale_order so\n" +
+                "WHERE so.furniture_status=" + orderStatus.getStatus());
     }
 
     public static List<Order> getSaleOrdersList() {
@@ -476,9 +479,29 @@ public class DBConnect {
         }
     }
 
-//    public static List<Order> checkMaterialForOrderByOrderID(String id){
-//        return crea
-//    }
+    public static boolean insertOrder(Order order){
+        try {
+            queryUpdate("INSERT INTO sale_order(fk_customer_id,c_name,c_address,cost_total) VALUES\n" +
+                    "('" + order.getCustomer().getId() + "','" +
+                    order.getName() + "','" +
+                    order.getAddress() + "','" +
+                    order.getTotalPrice() + "')");
+
+            for (Map.Entry<Furniture, Integer> furnitureIntegerEntry:
+                 order.getFurnitures().entrySet()) {
+                Furniture furniture = furnitureIntegerEntry.getKey();
+                int quantity = furnitureIntegerEntry.getValue();
+                queryUpdate("INSERT INTO sale_order_list(fk_sale_order_id,fk_furniture_id,quantity,cost_withholding) VALUES\n" +
+                        "('" + order.getId() + "','" +
+                        furniture.getId() + "','" +
+                        quantity + "','" +
+                        furniture.getPrice() + "')");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return true;
+    }
 
     public static void test() throws SQLException {
 //        HashMap<Material,Integer> materialIntegerHashMap = getAmountMaterialNeedAddToStock();

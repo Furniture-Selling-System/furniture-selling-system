@@ -26,6 +26,7 @@ public class Order {
         this.creationDateTime = creationDateTime;
         this.status = status;
         this.customer = customer;
+        furnitures = new HashMap<>();
     }
 
     public void addFurniture(Furniture furniture, int quantity) {
