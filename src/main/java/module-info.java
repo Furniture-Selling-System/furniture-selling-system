@@ -11,5 +11,4 @@ module org.furniture {
     opens org.furniture.controllers to javafx.fxml;
     exports org.furniture.controllers;
 
-    opens org.furniture.controllers.create to javafx.fxml;
 }
