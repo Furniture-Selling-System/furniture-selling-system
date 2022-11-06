@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.furniture.enums.Page;
-import org.furniture.services.DBConnect;
 
 
 /**
@@ -40,8 +39,8 @@ public class App extends Application {
 
     public static void main(String[] args) throws SQLException {
         DBConnect.loadDriver();
-        DBConnect.test();
-    //        launch();
+//        DBConnect.test();
+           launch();
         DBConnect.closeDriver();
     }
 
