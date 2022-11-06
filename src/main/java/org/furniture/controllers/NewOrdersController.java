@@ -80,14 +80,6 @@ public class NewOrdersController extends AbstractPageOrderController {
     }
 
     private void clear() {
-        // for (TableColumn<Order, ?> tc : ordersTableView.getColumns()) {
-        //     tc.getColumns();
-        // }
-        // for (TableColumn<Furniture, ?> tc : furnitureTableView.getColumns()) {
-        //     tc.getColumns();
-        // }
-        // for (TableColumn<Material, ?> tc : materialsTableView.getColumns()) {
-        //     tc.getColumns();
 
         if (data != null) {
             data.clear();
@@ -127,7 +119,7 @@ public class NewOrdersController extends AbstractPageOrderController {
     @FXML
     private void ordersTableViewOnMouseClicked(MouseEvent e) {
         Order newSelectingOrder = ordersTableView.getSelectionModel().getSelectedItem();
-        if ((selectingOrder == null) || (selectingOrder != newSelectingOrder)) {
+        if ((selectingOrder != null) || (selectingOrder != newSelectingOrder)) {
             selectingOrder = newSelectingOrder;
         } else {
             return;

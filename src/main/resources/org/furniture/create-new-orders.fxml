@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.furniture.controllers.NewOrdersController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.furniture.controllers.create.CreateNewOrderController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="1366.0">
          <items>
@@ -30,7 +30,7 @@
             <Button fx:id="furnitureNavigationButton" layoutX="610.0" layoutY="13.0" mnemonicParsing="false" onAction="#furnitureNavigationButtonOnAction" text="Furniture" />
          </items>
       </ToolBar>
-      <AnchorPane layoutY="40.0" onContextMenuRequested="#ordersListViewOnAction" prefHeight="728.0" prefWidth="1366.0">
+      <AnchorPane layoutY="40.0" prefHeight="728.0" prefWidth="1366.0">
          <children>
             <Text layoutX="41.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create New Orders">
                <font>
@@ -39,46 +39,46 @@
             </Text>
             <Button fx:id="cancelButton" cancelButton="true" layoutX="1155.0" layoutY="671.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" text="Cancel" />
             <Button fx:id="createButton" defaultButton="true" layoutX="1244.0" layoutY="671.0" mnemonicParsing="false" onAction="#createButtonOnAction" text="Create" />
-            <ComboBox editable="true" layoutX="249.0" layoutY="174.0" prefHeight="25.0" prefWidth="213.0" />
+            <ComboBox fx:id="selectCustomerComboBox" editable="true" layoutX="249.0" layoutY="174.0" onAction="#selectCustomerComboBoxOnAction" prefHeight="25.0" prefWidth="213.0" />
             <Text layoutX="71.0" layoutY="194.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select customers">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <TextField disable="true" layoutX="249.0" layoutY="258.0" />
+            <TextField fx:id="customerIdTextField" disable="true" layoutX="249.0" layoutY="258.0" />
             <Text layoutX="71.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer ID">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <TextField layoutX="249.0" layoutY="293.0" />
+            <TextField fx:id="customerNameTextField" layoutX="249.0" layoutY="293.0" />
             <Text layoutX="71.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Name">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <TextField layoutX="249.0" layoutY="328.0" />
+            <TextField fx:id="customerPhoneTextField" layoutX="249.0" layoutY="328.0" />
             <Text layoutX="71.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Phone">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <TextArea layoutX="249.0" layoutY="367.0" prefHeight="105.0" prefWidth="200.0" />
+            <TextArea fx:id="customerAddressTextArea" layoutX="249.0" layoutY="367.0" prefHeight="105.0" prefWidth="200.0" wrapText="true" />
             <Text layoutX="71.0" layoutY="387.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Address">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
             <Separator layoutX="529.0" layoutY="85.0" orientation="VERTICAL" prefHeight="564.0" prefWidth="6.0" />
-            <TableView layoutX="666.0" layoutY="240.0" prefHeight="303.0" prefWidth="507.0">
+            <TableView fx:id="furnitureTableView" layoutX="666.0" layoutY="240.0" prefHeight="303.0" prefWidth="507.0">
               <columns>
-                <TableColumn prefWidth="250.0" text="Product Name" />
-                  <TableColumn prefWidth="85.0" text="Price" />
-                  <TableColumn prefWidth="85.0" text="Quantity" />
-                  <TableColumn prefWidth="85.0" text="Total Price" />
+                <TableColumn fx:id="productNameTableColumn" prefWidth="250.0" text="Furniture Name" />
+                  <TableColumn fx:id="priceTableColumn" prefWidth="85.0" text="Price" />
+                  <TableColumn fx:id="quantityTableColumn" prefWidth="85.0" text="Quantity" />
+                  <TableColumn fx:id="totalPriceTableColumn" prefWidth="85.0" text="Total Price" />
               </columns>
             </TableView>
-            <ComboBox editable="true" layoutX="779.0" layoutY="94.0" prefHeight="25.0" prefWidth="213.0" />
+            <ComboBox fx:id="selectFurnitureComboBox" editable="true" layoutX="779.0" layoutY="94.0" onAction="#selectFurnitureComboBoxOnAction" prefHeight="25.0" prefWidth="213.0" />
             <Text layoutX="601.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select furniture">
                <font>
                   <Font size="18.0" />
@@ -89,23 +89,15 @@
                   <Font size="18.0" />
                </font>
             </Text>
-            <ComboBox editable="true" layoutX="779.0" layoutY="134.0" prefHeight="25.0" prefWidth="65.0" />
-            <Button layoutX="966.0" layoutY="134.0" mnemonicParsing="false" text="Add" />
+            <Button fx:id="addButton" layoutX="966.0" layoutY="134.0" mnemonicParsing="false" onAction="#addButtonOnAction" text="Add" />
             <Text layoutX="601.0" layoutY="194.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Price">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <TextField disable="true" layoutX="779.0" layoutY="174.0" prefHeight="25.0" prefWidth="107.0" />
-            <TableView layoutX="666.0" layoutY="564.0" prefHeight="54.0" prefWidth="507.0">
-               <columns>
-                  <TableColumn prefWidth="250.0" text="Product Name" />
-                  <TableColumn prefWidth="85.0" text="Price" />
-                  <TableColumn prefWidth="85.0" text="Quantity" />
-                  <TableColumn prefWidth="85.0" text="Total Price" />
-               </columns>
-            </TableView>
-            <Button layoutX="1193.0" layoutY="591.0" mnemonicParsing="false" text="Delete" />
+            <TextField fx:id="totalPriceTextField" disable="true" layoutX="779.0" layoutY="174.0" prefHeight="25.0" prefWidth="107.0" />
+            <Button fx:id="deleteButton" layoutX="1193.0" layoutY="518.0" mnemonicParsing="false" onAction="#deleteButtonOnAction" text="Delete" />
+            <TextField fx:id="quantityTextField" layoutX="779.0" layoutY="133.0" onAction="#quantityTextFieldOnAction" prefHeight="25.0" prefWidth="51.0" />
          </children>
       </AnchorPane>
    </children>
