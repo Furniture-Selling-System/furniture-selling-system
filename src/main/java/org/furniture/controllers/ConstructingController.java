@@ -9,9 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -20,20 +18,16 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
-import org.furniture.UIManager;
 import org.furniture.enums.OrderStatus;
-import org.furniture.enums.Page;
 import org.furniture.models.Furniture;
 import org.furniture.models.Material;
 import org.furniture.models.Order;
 import org.furniture.services.DBConnect;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class ConstructingController extends AbstractPageOrderController {
     @FXML private TextField searchTextField;
