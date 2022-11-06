@@ -79,7 +79,7 @@ public class MaterialsController extends AbstractPageController {
         materialsList = DBConnect.getMaterialsList();
         ArrayList<String> mNames = new ArrayList<>();
         for (Material m : materialsList) {
-            mNames.add(m.getName());
+            mNames.add(m.getId() + " : " + m.getName());
         }
         materialListView.getItems().addAll(mNames);
         materialListView.refresh();

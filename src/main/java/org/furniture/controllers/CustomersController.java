@@ -86,7 +86,7 @@ public class CustomersController extends AbstractPageController {
         customersList = DBConnect.getCustomers();
         ArrayList<String> cNames = new ArrayList<>();
         for (Customer c : customersList) {
-            cNames.add(c.getName());
+            cNames.add(c.getId() + " : " + c.getName());
         }
         customerListView.getItems().addAll(cNames);
         customerListView.refresh();
