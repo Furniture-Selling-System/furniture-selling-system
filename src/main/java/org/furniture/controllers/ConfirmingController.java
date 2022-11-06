@@ -18,44 +18,39 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
-public class ShippingController extends AbstractPageOrderController {
+public class ConfirmingController extends AbstractPageOrderController {
 
-    @FXML TextField searchTextField;
-    @FXML TableView<Order> orderTableView;
-    @FXML TableColumn<Order, String> orderIdTableColumn;
-    @FXML TableColumn<Order, String> customerNameTableColumn;
-    @FXML TableColumn<Order, String> orderDateTableColumn;
+    @FXML private TextField searchTextField;
+    @FXML private TableView<Order> ordersTableView;
+    @FXML private TableColumn<Order, String> orderIdTableColumn;
+    @FXML private TableColumn<Order, String> customerNameTableColumn;
+    @FXML private TableColumn<Order, String> orderDateTableColumn;
     @FXML TableView<Furniture> furnitureTableView;
     @FXML TableColumn<Furniture, String> furnitureNameTableColumn;
     @FXML TableColumn<Furniture, String> furnitureQuantityTableColumn;
-    @FXML TextField customerNameTextField;
-    @FXML TextField customerPhoneTextFIeld;
-    @FXML TextArea customerAddressTextArea;
 
     private ObservableList<Order> oList;
     private ObservableList<Furniture> fList;
-    
     private Order selectingOrder;
 
     @Override
     protected void confirmButtonOnAction(ActionEvent e) {
         boolean result = true;
-            if (result == true) {
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.getButtonTypes().setAll(ButtonType.OK);
-                alert.showAndWait();
-                initialize();
-            } else {
-                
-            }
+        if (result == true) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.getButtonTypes().setAll(ButtonType.OK);
+            alert.showAndWait();
+            initialize();
+        } else {
+            
+        }
     }
 
     @Override
@@ -63,16 +58,16 @@ public class ShippingController extends AbstractPageOrderController {
         setUpClear();
         clear();
         getData();
-        setTableView();
+        showOrders();
     }
-    
+
     private void setUpClear() {
         searchTextField.clear();
         confirmButton.setDisable(true);
     }
 
     private void clear() {
-
+        
         if (oList != null) {
             oList.clear();
         }
@@ -83,44 +78,39 @@ public class ShippingController extends AbstractPageOrderController {
     }
 
     private void getData() {
-        List<Order> orderList = DBConnect.getSaleOrdersByStatus(OrderStatus.SHIPPING);
+        List<Order> orderList = DBConnect.getSaleOrdersByStatus(OrderStatus.CONFIRMING);
         oList = FXCollections.observableList(orderList);
     }
 
-    private void setTableView() {
-        orderTableView.setItems(oList);
-        orderIdTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order,String>,ObservableValue<String>>() {
-
+    private void showOrders() {
+        ordersTableView.setItems(oList);
+        orderIdTableColumn.setCellValueFactory(new javafx.util.Callback<TableColumn.CellDataFeatures<Order,String>,ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(CellDataFeatures<Order, String> arg0) {
                 return new SimpleStringProperty(arg0.getValue().getId());
-            }
-            
+            } 
         });
-        customerNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order,String>,ObservableValue<String>>() {
-
+        customerNameTableColumn.setCellValueFactory(new javafx.util.Callback<TableColumn.CellDataFeatures<Order,String>,ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(CellDataFeatures<Order, String> arg0) {
                 return new SimpleStringProperty(arg0.getValue().getName());
-            }
-            
+            } 
         });
-        orderDateTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Order,String>,ObservableValue<String>>() {
-
+        orderDateTableColumn.setCellValueFactory(new javafx.util.Callback<TableColumn.CellDataFeatures<Order,String>,ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(CellDataFeatures<Order, String> arg0) {
                 return new SimpleStringProperty(arg0.getValue().getCreationDateTime().toString());
-            }
-            
+            } 
         });
-        
     }
 
     @FXML
     private void ordersTableViewOnMouseClicked(MouseEvent e) {
-        Order newSelectingOrder = orderTableView.getSelectionModel().getSelectedItem();
+        Order newSelectingOrder = ordersTableView.getSelectionModel().getSelectedItem();
         if ((selectingOrder != null) || (selectingOrder != newSelectingOrder)) {
             selectingOrder = newSelectingOrder;
+
+            confirmButton.setDisable(false);
 
             HashMap<Furniture, Integer> f = DBConnect.getFurnitureAmountByOrderID(selectingOrder.getId());
             fList = FXCollections.observableList(new ArrayList<>(f.keySet()));
@@ -145,14 +135,11 @@ public class ShippingController extends AbstractPageOrderController {
                     }
                     return null;
                 }
-                
             });
-
-            confirmButton.setDisable(false);
-
         } else {
             
         }
+
     }
 
 }

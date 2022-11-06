@@ -38,14 +38,14 @@
             </Text>
             <Button fx:id="confirmButton" disable="true" layoutX="1220.0" layoutY="670.0" mnemonicParsing="false" onAction="#confirmButtonOnAction" text="Confirm" />
             <TextField fx:id="searchTextField" layoutX="207.0" layoutY="146.0" onKeyTyped="#searchTextFieldOnAction" prefHeight="25.0" prefWidth="265.0" promptText="Enter customer name to search for orders..." />
-            <TableView fx:id="orderTableView" layoutX="112.0" layoutY="195.0" prefHeight="442.0" prefWidth="455.0">
+            <Separator layoutX="680.0" layoutY="53.0" orientation="VERTICAL" prefHeight="642.0" prefWidth="6.0" />
+            <TableView fx:id="orderTableView" layoutX="112.0" layoutY="195.0" onMouseClicked="#ordersTableViewOnMouseClicked" prefHeight="442.0" prefWidth="455.0">
                <columns>
                   <TableColumn fx:id="orderIdTableColumn" prefWidth="75.0" text="Order ID" />
                   <TableColumn fx:id="customerNameTableColumn" prefWidth="189.0" text="Customer Name" />
                   <TableColumn fx:id="orderDateTableColumn" prefWidth="189.0" text="Order Date" />
                </columns>
             </TableView>
-            <Separator layoutX="680.0" layoutY="53.0" orientation="VERTICAL" prefHeight="642.0" prefWidth="6.0" />
             <TableView fx:id="furnitureTableView" layoutX="887.0" layoutY="67.0" prefHeight="209.0" prefWidth="278.0">
                <columns>
                   <TableColumn fx:id="furnitureNameTableColumn" prefWidth="183.0" text="Furniture Name" />

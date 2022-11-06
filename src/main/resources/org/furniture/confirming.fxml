@@ -37,24 +37,24 @@
             </Text>
             <TextField fx:id="searchTextField" layoutX="207.0" layoutY="146.0" onKeyTyped="#searchTextFieldOnAction" prefHeight="25.0" prefWidth="265.0" promptText="Enter customer name to search for orders..." />
             <Button fx:id="confirmButton" disable="true" layoutX="1220.0" layoutY="670.0" mnemonicParsing="false" onAction="#confirmButtonOnAction" text="Confirm" />
-            <TableView layoutX="112.0" layoutY="195.0" prefHeight="442.0" prefWidth="455.0">
-              <columns>
-                <TableColumn prefWidth="75.0" text="Order ID" />
-                <TableColumn prefWidth="189.0" text="Customer Name" />
-                  <TableColumn prefWidth="189.0" text="Order Date" />
-              </columns>
-            </TableView>
             <Separator layoutX="680.0" layoutY="53.0" orientation="VERTICAL" prefHeight="642.0" prefWidth="6.0" />
-            <TableView layoutX="804.0" layoutY="146.0" prefHeight="209.0" prefWidth="455.0">
+            <TableView fx:id="ordersTableView" layoutX="112.0" layoutY="196.0" onMouseClicked="#ordersTableViewOnMouseClicked" prefHeight="442.0" prefWidth="455.0">
                <columns>
-                  <TableColumn prefWidth="81.0" text="Furniture ID" />
-                  <TableColumn prefWidth="183.0" text="Furniture Name" />
-                  <TableColumn prefWidth="93.0" text="Quantity" />
-                  <TableColumn prefWidth="97.0" text="Price" />
+                  <TableColumn fx:id="orderIdTableColumn" prefWidth="75.0" text="Order ID" />
+                  <TableColumn fx:id="customerNameTableColumn" prefWidth="189.0" text="Customer Name" />
+                  <TableColumn fx:id="orderDateTableColumn" prefWidth="189.0" text="Order Date" />
                </columns>
             </TableView>
-            <TextField disable="true" layoutX="925.0" layoutY="392.0" onKeyTyped="#searchTextFieldOnAction" prefHeight="25.0" prefWidth="265.0" />
-            <Text layoutX="832.0" layoutY="409.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Price" />
+            <TextField fx:id="totalPriceTextField" disable="true" layoutX="926.0" layoutY="417.0" onKeyTyped="#searchTextFieldOnAction" prefHeight="25.0" prefWidth="265.0" />
+            <Text layoutX="833.0" layoutY="434.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Price" />
+            <TableView fx:id="furnitureTableView" layoutX="772.0" layoutY="60.0" prefHeight="303.0" prefWidth="507.0">
+               <columns>
+                  <TableColumn fx:id="productNameTableColumn" prefWidth="250.0" text="Furniture Name" />
+                  <TableColumn fx:id="priceTableColumn" prefWidth="85.0" text="Price" />
+                  <TableColumn fx:id="quantityTableColumn" prefWidth="85.0" text="Quantity" />
+                  <TableColumn fx:id="totalPriceTableColumn" prefWidth="85.0" text="Total Price" />
+               </columns>
+            </TableView>
          </children>
       </AnchorPane>
    </children>
