@@ -7,11 +7,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+
+import org.furniture.models.Customer;
 import org.furniture.services.DBConnect;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomersController extends AbstractPageController {
 
@@ -34,11 +37,11 @@ public class CustomersController extends AbstractPageController {
     @FXML
     Button confirmButton;
 
-    private ArrayList<String> customersArrayList;
+    private List<Customer> customersList;
 
     @Override
     protected void initialize() {
-        customersArrayList = DBConnect.getCustomers();
+        customersList = DBConnect.getCustomers();
         showCustomerListView();
         clearSelectedCustomer();
         handleSelectedCustomerListView();
@@ -47,8 +50,14 @@ public class CustomersController extends AbstractPageController {
     @FXML
     private void searchTextFieldOnAction(KeyEvent e) {
         customerListView.getItems().clear();
-        customersArrayList = DBConnect.getCustomersByName(searchTextField.getText());
-        customerListView.getItems().addAll(customersArrayList);
+        customersList = DBConnect.getCustomersByName(searchTextField.getText());
+
+        ArrayList<String> cNames = new ArrayList<>();
+        for (Customer c : customersList) {
+            cNames.add(c.getName());
+        }
+
+        customerListView.getItems().addAll(cNames);
         customerListView.refresh();
         if(searchTextField.getText().isEmpty())
             initialize();
@@ -74,8 +83,12 @@ public class CustomersController extends AbstractPageController {
 
     private void showCustomerListView() {
         customerListView.getItems().clear();
-        customersArrayList = DBConnect.getCustomers();
-        customerListView.getItems().addAll(customersArrayList);
+        customersList = DBConnect.getCustomers();
+        ArrayList<String> cNames = new ArrayList<>();
+        for (Customer c : customersList) {
+            cNames.add(c.getName());
+        }
+        customerListView.getItems().addAll(cNames);
         customerListView.refresh();
     }
 
