@@ -56,6 +56,6 @@ public class Furniture {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", materials=" + materials +
-                '}';
+                "}\n";
     }
 }
