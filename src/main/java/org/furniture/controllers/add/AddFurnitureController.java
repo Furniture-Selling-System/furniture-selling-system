@@ -1,49 +1,51 @@
 package org.furniture.controllers.add;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
+
 import org.furniture.UIManager;
 import org.furniture.controllers.AbstractPageController;
 import org.furniture.enums.Page;
+import org.furniture.models.Furniture;
 import org.furniture.models.Material;
 import org.furniture.services.DBConnect;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddFurnitureController extends AbstractPageController {
-    @FXML
-    TextField furnitureIdTextField;
-    @FXML
-    TextField furnitureNameTextField;
-    @FXML
-    TextField furniturePriceTextField;
-
-    @FXML
-    TableView<Material> materialTableView;
-
-    @FXML
-    TableColumn<Material,String> materialNameTableColumn;
-
-    @FXML
-    TableColumn<Material,String> quantityTableColumn;
-
-    @FXML
-    ComboBox<Material> selectMaterialComboBox;
-
-    @FXML
-    TextField quantityTextField;
-
-    @FXML
-    Button deleteButton;
+    @FXML TextField furnitureIdTextField;
+    @FXML TextField furnitureNameTextField;
+    @FXML TextField furniturePriceTextField;
+    @FXML TableView<Material> materialTableView;
+    @FXML TableColumn<Material,String> materialNameTableColumn;
+    @FXML TableColumn<Material,String> quantityTableColumn;
+    @FXML ComboBox<String> selectMaterialComboBox;
+    @FXML TextField quantityTextField;
+    @FXML Button deleteButton;
 
     private ObservableList<Material> data;
 
+    private ObservableList<Material> orderingMaterial;
+    private ObservableList<Integer> orderingMaterialQty;
+
+    private Material selectingMaterial;
+    private Material selectingMaterialInTable;
+
     @Override
     protected void initialize() {
+        orderingMaterial = FXCollections.observableArrayList();
+        orderingMaterialQty = FXCollections.observableArrayList();
         setUpClear();
         clear();
         getData();

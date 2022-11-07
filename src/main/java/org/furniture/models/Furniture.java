@@ -6,11 +6,11 @@ public class Furniture {
 
     private String id;
     private String name;
-    private int price;
+    private double price;
     private HashMap<Material, Integer> materials;
 
 
-    public Furniture(String id, String name, int price) {
+    public Furniture(String id, String name, double price) {
         this.id = id;
         this.name = name;
         this.price = price;
