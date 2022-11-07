@@ -35,7 +35,7 @@
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField fx:id="searchTextField" layoutX="207.0" layoutY="146.0" onKeyTyped="#searchTextFieldOnAction" prefHeight="25.0" prefWidth="265.0" promptText="Enter customer name to search for orders..." />
+            <TextField fx:id="searchTextField" layoutX="207.0" layoutY="146.0" onKeyTyped="#searchTextFieldOnKeyTyped" prefHeight="25.0" prefWidth="265.0" promptText="Enter customer name to search for orders..." />
             <Button fx:id="confirmButton" disable="true" layoutX="1220.0" layoutY="670.0" mnemonicParsing="false" onAction="#confirmButtonOnAction" text="Confirm" />
             <Separator layoutX="680.0" layoutY="53.0" orientation="VERTICAL" prefHeight="642.0" prefWidth="6.0" />
             <TableView fx:id="ordersTableView" layoutX="112.0" layoutY="196.0" onMouseClicked="#ordersTableViewOnMouseClicked" prefHeight="442.0" prefWidth="455.0">

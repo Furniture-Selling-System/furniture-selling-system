@@ -556,7 +556,7 @@ public class DBConnect {
 
     public static int getOrderLastID() {
         try {
-            ResultSet rs = query("SELECT max(id) id FROM order;");
+            ResultSet rs = query("SELECT max(id) id FROM sale_order;");
             rs.next();
             return rs.getInt("id");
         } catch (SQLException e) {

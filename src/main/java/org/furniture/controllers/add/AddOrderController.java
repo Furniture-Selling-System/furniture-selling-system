@@ -2,11 +2,14 @@ package org.furniture.controllers.add;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.furniture.UIManager;
 import org.furniture.controllers.AbstractPageController;
+import org.furniture.enums.OrderStatus;
 import org.furniture.enums.Page;
+import org.furniture.exceptions.DuplicateDataException;
 import org.furniture.models.Customer;
 import org.furniture.models.Furniture;
 import org.furniture.models.Order;
@@ -28,6 +31,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 public class AddOrderController extends AbstractPageController {
@@ -59,72 +64,16 @@ public class AddOrderController extends AbstractPageController {
     private Customer selectingCustomer;
     private Furniture selectingFurniture;
 
-    private Order order;
-
     @Override
     protected void initialize() {
+        orderingFurniture = FXCollections.observableArrayList();
+        orderingFurnitureQty = FXCollections.observableArrayList();
+
         setUpClear();
         clear();
         getData();
-        setTableView();
         showCustomers();
-    }
-
-    private void setTableView() {
-        furnitureTableView.setItems(orderingFurniture);
-        productNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Furniture,String>,ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(CellDataFeatures<Furniture, String> arg0) {
-                return new SimpleStringProperty(arg0.getValue().getId());
-            }
-        });
-        priceTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Furniture,String>,ObservableValue<String>>() {
-
-            @Override
-            public ObservableValue<String> call(CellDataFeatures<Furniture, String> arg0) {
-                return new SimpleStringProperty(String.valueOf(arg0.getValue().getPrice()));
-            }
-            
-        });
-
-        quantityTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Furniture,String>,ObservableValue<String>>() {
-
-            @Override
-            public ObservableValue<String> call(CellDataFeatures<Furniture, String> arg0) {
-                for (Furniture f : orderingFurniture) {
-                    if (f.getName().equals(arg0.getValue().getName())) {
-                        return new SimpleStringProperty(orderingFurnitureQty.get(orderingFurniture.indexOf(f)));
-                    }
-                }
-                return null;
-            }
-            
-        });
-
-        totalPriceTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Furniture,String>,ObservableValue<String>>() {
-
-            @Override
-            public ObservableValue<String> call(CellDataFeatures<Furniture, String> arg0) {
-                for (Furniture f : orderingFurniture) {
-                    if (f.getName().equals(arg0.getValue().getName())) {
-                        double totalPrice = arg0.getValue().getPrice() * Integer.parseInt(orderingFurnitureQty.get(orderingFurniture.indexOf(f)));
-                        return new SimpleStringProperty(String.valueOf(totalPrice));
-                    }
-                }
-                return null;
-            }
-            
-        });
-        
-    }
-
-    private void getData() {
-        List<Customer> cList = DBConnect.getCustomers();
-        customers = FXCollections.observableList(cList);
-
-        List<Furniture> fList = DBConnect.getFurnitureList();
-        furnitures = FXCollections.observableList(fList);
-        System.out.println(furnitures);
+        setTableView();
     }
 
     private void setUpClear() {
@@ -140,7 +89,6 @@ public class AddOrderController extends AbstractPageController {
         selectFurnitureComboBox.setDisable(true);
         quantityTextField.setDisable(true);
         addButton.setDisable(true);
-        deleteButton.setDisable(true);
     }
 
     private void clear() {
@@ -154,6 +102,64 @@ public class AddOrderController extends AbstractPageController {
         }
     }
 
+    private void getData() {
+        List<Customer> cList = DBConnect.getCustomers();
+        customers = FXCollections.observableList(cList);
+
+        List<Furniture> fList = DBConnect.getFurnitureList();
+        furnitures = FXCollections.observableList(fList);
+    }
+
+
+
+    private void setTableView() {
+        furnitureTableView.setItems(orderingFurniture);
+        productNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Furniture,String>,ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(CellDataFeatures<Furniture, String> arg0) {
+                return new SimpleStringProperty(arg0.getValue().getName());
+            }
+        });
+        priceTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Furniture,String>,ObservableValue<String>>() {
+
+            @Override
+            public ObservableValue<String> call(CellDataFeatures<Furniture, String> arg0) {
+                return new SimpleStringProperty(String.valueOf(arg0.getValue().getPrice()));
+            }
+            
+        });
+
+        quantityTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Furniture,String>,ObservableValue<String>>() {
+
+            @Override
+            public ObservableValue<String> call(CellDataFeatures<Furniture, String> arg0) {
+                for (int i = 0 ; i < orderingFurniture.size() ; ++i) {
+                    if (orderingFurniture.get(i).getName().equals(arg0.getValue().getName())) {
+                        return new SimpleStringProperty(orderingFurnitureQty.get(i));
+                    }
+                }
+                return null;
+            }
+            
+        });
+
+        totalPriceTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Furniture,String>,ObservableValue<String>>() {
+
+            @Override
+            public ObservableValue<String> call(CellDataFeatures<Furniture, String> arg0) {
+                for (int i = 0 ; i < orderingFurniture.size() ; ++i) {
+                    if (orderingFurniture.get(i).getName().equals(arg0.getValue().getName())) {
+                        double totalPrice = arg0.getValue().getPrice() * Integer.parseInt(orderingFurnitureQty.get(i));
+                        return new SimpleStringProperty(String.valueOf(totalPrice));
+                    }
+                }
+                return null;
+            }
+            
+        });
+        
+    }
+
     private void showCustomers() {
         List<String> cName = new ArrayList<>();
         for (Customer customer : customers) {
@@ -163,9 +169,23 @@ public class AddOrderController extends AbstractPageController {
         selectCustomerComboBox.getItems().setAll(cName);
     }
 
+    // @FXML
+    // private void selectCustomerComboBoxOnKeyTyped(KeyEvent e) {
+    //     List<Customer> customers = DBConnect.getCustomersByName(selectCustomerComboBox.getSelectionModel().getSelectedItem());
+    //     ObservableList<Customer> data = FXCollections.observableList(customers);
+    //     List<String> cName = new ArrayList<>();
+    //     for (Customer c : data) {
+    //         cName.add(c.getName());
+    //     }
+        
+    //     selectCustomerComboBox.setItems(FXCollections.observableList(cName));
+    // }
+
     @FXML
     private void selectCustomerComboBoxOnAction(ActionEvent e) {
         selectingCustomer = null;
+        orderingFurniture.clear();
+        orderingFurnitureQty.clear();
         for (Customer customer : customers) {
             if (customer.getName().equals(selectCustomerComboBox.getSelectionModel().getSelectedItem())) {
                 selectingCustomer = customer;
@@ -174,7 +194,7 @@ public class AddOrderController extends AbstractPageController {
         }
 
         if (selectingCustomer == null) {
-            // TODO
+            
         } else {
             customerIdTextField.setText(selectingCustomer.getId());
             customerNameTextField.setText(selectingCustomer.getName());
@@ -211,12 +231,18 @@ public class AddOrderController extends AbstractPageController {
         }
         
         quantityTextField.setText("1");
+        quantityTextFieldOnAction(null);
     }
 
     @FXML
-    private void quantityTextFieldOnAction(ActionEvent e) {
-        double totalPrice = Integer.parseInt(quantityTextField.getText()) * selectingFurniture.getPrice();
-        totalPriceTextField.setText(String.valueOf(totalPrice));
+    private void quantityTextFieldOnAction(KeyEvent e) {
+        try {
+            if ( Integer.parseInt(quantityTextField.getText()) <= 0 || Integer.parseInt(quantityTextField.getText()) > 99) throw new Exception();
+            double totalPrice = Integer.parseInt(quantityTextField.getText()) * selectingFurniture.getPrice();
+            totalPriceTextField.setText(String.valueOf(totalPrice));
+        } catch (Exception exception) {
+            totalPriceTextField.setText("");
+        }
     }
 
     @FXML
@@ -226,32 +252,40 @@ public class AddOrderController extends AbstractPageController {
 
     @FXML
     private void createButtonOnAction(ActionEvent e) throws IOException {
-        // TODO : SQL
-        boolean result = true;
-            if (result == true) {
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.getButtonTypes().setAll(ButtonType.OK);
-                alert.showAndWait();
-                initialize();
-            } else {
-                
-            }
+        Order o = new Order(String.valueOf(DBConnect.getOrderLastID() + 1), selectingCustomer.getName(), Double.parseDouble(totalPriceTextField.getText()), selectingCustomer.getAddress(), new Date(), OrderStatus.WAITING, selectingCustomer);
+        
+        for (int i = 0 ; i < orderingFurniture.size() ; ++i) {
+            o.addFurniture(orderingFurniture.get(i), Integer.parseInt(orderingFurnitureQty.get(i)));
+        }
+        DBConnect.insertOrder(o);
+        Alert alert = new Alert(AlertType.INFORMATION, "Order number " + o.getId() + " is successfully added.");
+        alert.getButtonTypes().setAll(ButtonType.OK);
+        alert.showAndWait();
+        initialize();
         UIManager.setPage(Page.NEW_ORDER_PAGE);
     }
 
     @FXML
     private void addButtonOnAction(ActionEvent e) {
         if (selectingCustomer != null && selectingFurniture != null) {
-            orderingFurniture.add(selectingFurniture);
-            orderingFurnitureQty.add(String.valueOf(Integer.parseInt(quantityTextField.getText())));
+            try {
+                if (Integer.valueOf(quantityTextField.getText()) <= 0 || Integer.valueOf(quantityTextField.getText()) > 99) throw new NumberFormatException();
+                if (orderingFurniture.contains(selectingFurniture)) throw new DuplicateDataException();
+                orderingFurniture.add(selectingFurniture);
+                orderingFurnitureQty.add(quantityTextField.getText());
+            } catch (NumberFormatException exception) {
+                new Alert(AlertType.WARNING, "Value must be integer between 1-99.").showAndWait();
+            } catch (DuplicateDataException exception) {
+                new Alert(AlertType.WARNING, "You have added this furniture already.").showAndWait();
+            }
+        } else {
+            new Alert(AlertType.WARNING, "No furnitures found.").showAndWait();
         }
     }
 
     @FXML
     private void deleteButtonOnAction(ActionEvent e) {
-        int index = orderingFurniture.indexOf(furnitureTableView.getSelectionModel().getSelectedItem());
-        orderingFurniture.remove(index);
-        
+        orderingFurniture.remove(furnitureTableView.getSelectionModel().getSelectedItem());
     }
     
 }

@@ -37,7 +37,7 @@
                </font>
             </Text>
             <Button fx:id="confirmButton" disable="true" layoutX="1220.0" layoutY="670.0" mnemonicParsing="false" onAction="#confirmButtonOnAction" text="Confirm" />
-            <TextField fx:id="searchTextField" layoutX="207.0" layoutY="146.0" onKeyTyped="#searchTextFieldOnAction" prefHeight="25.0" prefWidth="265.0" promptText="Enter customer name to search for orders..." />
+            <TextField fx:id="searchTextField" layoutX="207.0" layoutY="146.0" onKeyTyped="#searchTextFieldOnKeyTyped" prefHeight="25.0" prefWidth="265.0" promptText="Enter customer name to search for orders..." />
             <Separator layoutX="680.0" layoutY="53.0" orientation="VERTICAL" prefHeight="642.0" prefWidth="6.0" />
             <TableView fx:id="orderTableView" layoutX="112.0" layoutY="195.0" onMouseClicked="#ordersTableViewOnMouseClicked" prefHeight="442.0" prefWidth="455.0">
                <columns>
@@ -57,7 +57,7 @@
             <Text layoutX="833.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Phone" />
             <TextField fx:id="customerPhoneTextField" disable="true" layoutX="1009.0" layoutY="374.0" prefHeight="25.0" prefWidth="195.0" />
             <Text layoutX="833.0" layoutY="450.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Address" />
-            <TextArea fx:id="customerAddressTextArea" disable="true" layoutX="1009.0" layoutY="437.0" prefHeight="185.0" prefWidth="200.0" />
+            <TextArea fx:id="customerAddressTextArea" disable="true" layoutX="1009.0" layoutY="437.0" prefHeight="185.0" prefWidth="200.0" wrapText="true" />
          </children>
       </AnchorPane>
    </children>
