@@ -7,11 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.furniture.UIManager;
 import org.furniture.controllers.AbstractPageController;
-import org.furniture.enums.OrderStatus;
 import org.furniture.enums.Page;
-import org.furniture.models.Furniture;
 import org.furniture.models.Material;
-import org.furniture.models.Order;
 import org.furniture.services.DBConnect;
 
 import java.io.IOException;

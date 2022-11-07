@@ -140,7 +140,7 @@ public class DBConnect {
     public static HashMap<Material, Integer> getMaterialsByOrderId(String id) {
         HashMap<Material, Integer> materialIntegerHashMap = new HashMap<>();
         try {
-            ResultSet rs = query("SELECT m.id m_id,SUM(bom.spend) sum_spend FROM sale_order_list AS ol\n" +
+            ResultSet rs = query("SELECT m.id m_id,SUM(bom.spend * ol.quantity) sum_spend FROM sale_order_list AS ol\n" +
                     "                           INNER JOIN sale_order AS so\n" +
                     "                               ON so.id = ol.fk_sale_order_id\n" +
                     "                           INNER JOIN furniture AS f\n" +
@@ -188,7 +188,7 @@ public class DBConnect {
         try {
             ResultSet rs = null;
             List<String> idMaterialFirstTable = new ArrayList<>();
-            rs = query("SELECT m_id,minimum - (quantity - sum_spend) need  FROM (SELECT m.id m_id,SUM(bom.spend) sum_spend,m.quantity,m.minimum FROM sale_order_list AS ol\n" +
+            rs = query("SELECT m_id,minimum - (quantity - sum_spend) need  FROM (SELECT m.id m_id,SUM(bom.spend * ol.quantity) sum_spend,m.quantity,m.minimum FROM sale_order_list AS ol\n" +
                     "                           INNER JOIN sale_order AS so\n" +
                     "                               ON so.id = ol.fk_sale_order_id\n" +
                     "                           INNER JOIN furniture AS f\n" +
