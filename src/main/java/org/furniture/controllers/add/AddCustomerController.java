@@ -42,7 +42,7 @@ public class AddCustomerController extends AbstractPageController {
                     phoneTextField.getText());
             DBConnect.insertCustomer(customer);
 
-            Alert alert = new Alert(AlertType.INFORMATION, "User has been successfully added.");
+            Alert alert = new Alert(AlertType.INFORMATION, "Customer has been successfully created.");
             alert.getButtonTypes().setAll(ButtonType.OK);
             alert.showAndWait();
 
