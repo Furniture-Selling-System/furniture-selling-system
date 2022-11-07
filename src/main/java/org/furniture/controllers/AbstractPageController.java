@@ -18,6 +18,7 @@ public abstract class AbstractPageController {
     @FXML protected Button customersNavigationButton;
     @FXML protected Button materialsNavigationButton;
     @FXML protected Button furnitureNavigationButton;
+    @FXML protected Button checkMaterialNavigationButton;
     
     @FXML
     abstract protected void initialize();
@@ -60,5 +61,10 @@ public abstract class AbstractPageController {
     @FXML
     protected void furnitureNavigationButtonOnAction(ActionEvent e) throws IOException {
         UIManager.setPage(Page.FURNITURE_PAGE);
+    }
+
+    @FXML
+    protected void checkMaterialNavigationButtonOnAction(ActionEvent e) throws IOException {
+        UIManager.setPage(Page.CHECK_MATERIAL_PAGE);
     }
 }

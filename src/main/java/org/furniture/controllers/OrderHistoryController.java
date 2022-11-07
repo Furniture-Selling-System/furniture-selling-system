@@ -32,7 +32,6 @@ public class OrderHistoryController extends AbstractPageController {
     @FXML private TableColumn<Furniture, String> furnitureNameTableColumn;
     @FXML private TableColumn<Furniture, String> furniturePriceTableColumn;
     @FXML private TableColumn<Furniture, String> furnitureQuantityTableColumn;
-    @FXML private TableColumn<Furniture, String> furnitureAmountTableColumn;
     @FXML private TableColumn<Furniture, String> furnitureTotalPriceTableColumn;
     @FXML private TextField totalIncomeTextField;
 

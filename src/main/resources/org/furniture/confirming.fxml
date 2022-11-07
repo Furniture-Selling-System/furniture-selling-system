@@ -14,19 +14,20 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.furniture.controllers.ConfirmingController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="1366.0">
-        <items>
-          <Button fx:id="newOrdersNavigationButton" mnemonicParsing="false" onAction="#newOrdersNavigationButtonOnAction" text="New Orders" />
-            <Button fx:id="constructingNavigationButton" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#constructingNavigationButtonOnAction" text="Constructing" />
-            <Button fx:id="shippingNavigationButton" layoutX="66.0" layoutY="13.0" mnemonicParsing="false" onAction="#shippingNavigationButtonOnAction" text="Shipping" />
-            <Button fx:id="confirmingNavigationButton" disable="true" layoutX="122.0" layoutY="13.0" mnemonicParsing="false" onAction="#confirmingNavigationButtonOnAction" text="Confirming" />
-            <Separator orientation="VERTICAL" />
-            <Button fx:id="orderHistoryNavigationButton" mnemonicParsing="false" onAction="#orderHistoryNavigationButtonOnAction" text="Order History" />
-            <Region prefWidth="700.0" />
-            <Separator orientation="VERTICAL" />
-            <Button fx:id="customersNavigationButton" layoutX="249.0" layoutY="13.0" mnemonicParsing="false" onAction="#customersNavigationButtonOnAction" text="Customers" />
-            <Button fx:id="materialsNavigationButton" layoutX="329.0" layoutY="13.0" mnemonicParsing="false" onAction="#materialsNavigationButtonOnAction" text="Materials" />
-            <Button fx:id="furnitureNavigationButton" layoutX="610.0" layoutY="13.0" mnemonicParsing="false" onAction="#furnitureNavigationButtonOnAction" text="Furniture" />
-        </items>
+          <items>
+              <Button fx:id="newOrdersNavigationButton" mnemonicParsing="false" onAction="#newOrdersNavigationButtonOnAction" text="New Orders" />
+              <Button fx:id="constructingNavigationButton" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#constructingNavigationButtonOnAction" text="Constructing" />
+              <Button fx:id="shippingNavigationButton" layoutX="66.0" layoutY="13.0" mnemonicParsing="false" onAction="#shippingNavigationButtonOnAction" text="Shipping" />
+              <Button fx:id="confirmingNavigationButton" disable="true" layoutX="122.0" layoutY="13.0" mnemonicParsing="false" onAction="#confirmingNavigationButtonOnAction" text="Confirming" />
+              <Separator orientation="VERTICAL" />
+              <Button fx:id="orderHistoryNavigationButton" mnemonicParsing="false" onAction="#orderHistoryNavigationButtonOnAction" text="Order History" />
+              <Button fx:id="checkMaterialNavigationButton" mnemonicParsing="false" onAction="#checkMaterialNavigationButtonOnAction" text="Check Material" />
+              <Region prefWidth="605.0" />
+              <Separator orientation="VERTICAL" />
+              <Button fx:id="customersNavigationButton" layoutX="249.0" layoutY="13.0" mnemonicParsing="false" onAction="#customersNavigationButtonOnAction" text="Customers" />
+              <Button fx:id="materialsNavigationButton" layoutX="329.0" layoutY="13.0" mnemonicParsing="false" onAction="#materialsNavigationButtonOnAction" text="Materials" />
+              <Button fx:id="furnitureNavigationButton" layoutX="610.0" layoutY="13.0" mnemonicParsing="false" onAction="#furnitureNavigationButtonOnAction" text="Furniture" />
+          </items>
       </ToolBar>
       <AnchorPane layoutY="40.0" prefHeight="728.0" prefWidth="1366.0">
          <children>

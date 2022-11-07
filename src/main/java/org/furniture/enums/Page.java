@@ -7,6 +7,7 @@ public enum Page {
     CONFIRM_PAGE        ("/org/furniture/confirming"),
 
     ORDER_HISTORY_PAGE("/org/furniture/order-history"),
+    CHECK_MATERIAL_PAGE("/org/furniture/check-material"),
 
     CUSTOMERS_PAGE("/org/furniture/customers"),
     FURNITURE_PAGE("/org/furniture/furniture"),

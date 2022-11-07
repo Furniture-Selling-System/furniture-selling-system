@@ -22,7 +22,8 @@
             <Button fx:id="confirmingNavigationButton" layoutX="122.0" layoutY="13.0" mnemonicParsing="false" onAction="#confirmingNavigationButtonOnAction" text="Confirming" />
             <Separator orientation="VERTICAL" />
             <Button fx:id="orderHistoryNavigationButton" disable="true" mnemonicParsing="false" onAction="#orderHistoryNavigationButtonOnAction" text="Order History" />
-            <Region prefWidth="700.0" />
+            <Button fx:id="checkMaterialNavigationButton" mnemonicParsing="false" onAction="#checkMaterialNavigationButtonOnAction" text="Check Material" />
+            <Region prefWidth="605.0" />
             <Separator orientation="VERTICAL" />
             <Button fx:id="customersNavigationButton" layoutX="249.0" layoutY="13.0" mnemonicParsing="false" onAction="#customersNavigationButtonOnAction" text="Customers" />
             <Button fx:id="materialsNavigationButton" layoutX="329.0" layoutY="13.0" mnemonicParsing="false" onAction="#materialsNavigationButtonOnAction" text="Materials" />
