@@ -122,7 +122,7 @@ public class CreateNewOrderController extends AbstractPageController {
         List<Customer> cList = DBConnect.getCustomers();
         customers = FXCollections.observableList(cList);
 
-        List<Furniture> fList = DBConnect.getFurnituresList();
+        List<Furniture> fList = DBConnect.getFurnitureList();
         furnitures = FXCollections.observableList(fList);
         System.out.println(furnitures);
     }

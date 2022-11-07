@@ -1,7 +1,7 @@
 package org.furniture.enums;
 
 public enum Page {
-    NEW_ORDER_PAGE      ("/org/furniture/new-orders"),
+    NEW_ORDER_PAGE      ("/org/furniture/orders"),
     CONSTRUCT_PAGE      ("/org/furniture/constructing"),
     SHIP_PAGE           ("/org/furniture/shipping"),
     CONFIRM_PAGE        ("/org/furniture/confirming"),
@@ -12,8 +12,10 @@ public enum Page {
     FURNITURE_PAGE      ("/org/furniture/furniture"),
     MATERIALS_PAGE      ("/org/furniture/materials"),
 
-    CREATE_ORDER_PAGE   ("/org/furniture/create-new-orders"),
-    CREATE_CUSTOMER_PAGE("/org/furniture/create-customer");
+    CREATE_ORDER_PAGE   ("/org/furniture/add/add-orders"),
+    CREATE_CUSTOMER_PAGE("/org/furniture/add/add-customers"),
+    CREATE_MATERIAL_PAGE("/org/furniture/add/add-materials"),
+    CREATE_FURNITURE_PAGE("/org/furniture/add/add-furniture");
 
     private String fxml;
 
