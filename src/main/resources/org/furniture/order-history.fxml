@@ -36,20 +36,19 @@
                   <Font size="24.0" />
                </font>
             </Text>
-            <TableView layoutX="283.0" layoutY="154.0" prefHeight="442.0" prefWidth="801.0">
+            <TableView fx:id="furnitureTableView" layoutX="283.0" layoutY="154.0" prefHeight="442.0" prefWidth="801.0">
                <columns>
-                  <TableColumn prefWidth="75.0" text="Product ID" />
-                  <TableColumn prefWidth="189.0" text="Product Name" />
-                  <TableColumn prefWidth="134.0" text="Price" />
-                  <TableColumn prefWidth="93.0" text="Quantity" />
-                  <TableColumn prefWidth="155.0" text="Amount" />
-                  <TableColumn prefWidth="155.0" text="Total Price" />
+                  <TableColumn fx:id="furnitureIdTableColumn" prefWidth="75.0" text="Product ID" />
+                  <TableColumn fx:id="furnitureNameTableColumn" prefWidth="189.0" text="Product Name" />
+                  <TableColumn fx:id="furniturePriceTableColumn" prefWidth="134.0" text="Price" />
+                  <TableColumn fx:id="furnitureQuantityTableColumn" prefWidth="93.0" text="Quantity" />
+                  <TableColumn fx:id="furnitureTotalPriceTableColumn" prefWidth="309.0" text="Total Price" />
                </columns>
             </TableView>
-            <ComboBox layoutX="551.0" layoutY="81.0" prefHeight="25.0" prefWidth="105.0" promptText="Year" />
-            <ComboBox layoutX="707.0" layoutY="81.0" prefHeight="25.0" prefWidth="88.0" promptText="Quarter" />
+            <ComboBox fx:id="quarterComboBox" layoutX="707.0" layoutY="81.0" onAction="#comboBoxOnAction" prefHeight="25.0" prefWidth="88.0" promptText="Quarter" />
+            <ComboBox fx:id="yearComboBox" layoutX="551.0" layoutY="81.0" onAction="#comboBoxOnAction" prefHeight="25.0" prefWidth="105.0" promptText="Year" />
             <Text layoutX="479.0" layoutY="659.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Income" />
-            <TextField disable="true" layoutX="633.0" layoutY="642.0" />
+            <TextField fx:id="totalIncomeTextField" disable="true" layoutX="633.0" layoutY="642.0" />
          </children>
       </AnchorPane>
    </children>
