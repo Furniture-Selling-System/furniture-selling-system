@@ -13,7 +13,7 @@ CREATE TABLE sale_order
     c_address           text        NOT NULL,
     c_name              varchar(50) NOT NULL,
     cost_total          int(7)      NOT NULL CHECK (cost_total > 0),
-    furniture_status    int(1)      NOT NULL DEFAULT 0 CHECK (furniture_status BETWEEN 0 AND 3),
+    furniture_status    int(1)      NOT NULL DEFAULT 0 CHECK (furniture_status IN (0, 1, 2, 3, 8, 9)),
     create_date    date             NOT NULL DEFAULT CURRENT_DATE,
     FOREIGN KEY (fk_customer_id) REFERENCES customer (id)
         ON DELETE CASCADE

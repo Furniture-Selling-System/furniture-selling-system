@@ -20,6 +20,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 
 import org.furniture.UIManager;
 import org.furniture.enums.OrderStatus;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 import java.util.function.Consumer;
 
 public class NewOrdersController extends AbstractPageOrderController {
@@ -119,8 +121,14 @@ public class NewOrdersController extends AbstractPageOrderController {
     @FXML
     private void ordersTableViewOnMouseClicked(MouseEvent e) {
         Order newSelectingOrder = ordersTableView.getSelectionModel().getSelectedItem();
-        if ((selectingOrder != null) || (selectingOrder != newSelectingOrder)) {
-            selectingOrder = newSelectingOrder;
+        if (newSelectingOrder instanceof Order) {
+            if (selectingOrder == null) {
+                selectingOrder = newSelectingOrder;
+            } else if (selectingOrder.getId().equals(newSelectingOrder.getId())) {
+                return;
+            } else {
+                selectingOrder = newSelectingOrder;
+            }
         } else {
             return;
         }
@@ -173,33 +181,23 @@ public class NewOrdersController extends AbstractPageOrderController {
     }
 
     private void showMaterial() {
-        List<Furniture> furnitures = DBConnect.getFurnitureListByOrderID(selectingOrder.getId());
-        HashMap<Material, Integer> materials = new HashMap<>();
+        HashMap<Material, Integer> materialsBOM = DBConnect.getMaterialsByOrderId(selectingOrder.getId());
 
-        for (Furniture f : furnitures) {
-            HashMap<Material, Integer> mHashMap = f.getMaterials();
-            for (Material m : mHashMap.keySet()) {
-                if (materials.get(m) == null) {
-                    materials.put(m, mHashMap.get(m));
-                } else {
-                    materials.put(m, materials.get(m) + mHashMap.get(m));
-                }
-            }
-        }
-
-        ObservableSet<Material> mSet = FXCollections.observableSet(materials.keySet());
-        List<Material> oList = new ArrayList<>(mSet);
-        oList.sort(new Comparator<Material>() {
+        mList = FXCollections.observableArrayList(materialsBOM.keySet());
+        mList.sort(new Comparator<Material>() {
 
             @Override
             public int compare(Material o1, Material o2) {
-                if (Integer.parseInt(o1.getId()) >= Integer.parseInt(o2.getId())) return 1;
-                return -1;
+                return Integer.parseInt(o1.getId()) - Integer.parseInt(o2.getId());
             }
             
         });
-        mList = FXCollections.observableList(oList);
-        
+
+        HashMap<String, Integer> mId = new HashMap<>();
+        for (Material m : materialsBOM.keySet()) {
+            mId.put(m.getId(), materialsBOM.get(m));
+        }
+
         materialsTableView.setItems(mList);
         materialIdTableColumn.setCellValueFactory(new javafx.util.Callback<TableColumn.CellDataFeatures<Material,String>,ObservableValue<String>>() {
             @Override
@@ -211,50 +209,36 @@ public class NewOrdersController extends AbstractPageOrderController {
             @Override
             public ObservableValue<String> call(CellDataFeatures<Material, String> arg0) {
                 return new SimpleStringProperty(arg0.getValue().getName());
-            } 
+            }
         });
         materialQuantityTableColumn.setCellValueFactory(new javafx.util.Callback<TableColumn.CellDataFeatures<Material,String>,ObservableValue<String>>() {
+
             @Override
             public ObservableValue<String> call(CellDataFeatures<Material, String> arg0) {
-                for (Material m : materials.keySet()) {
-                    String mName = arg0.getValue().getName();
-                    if (m.getName().equals(mName)) {
-                        return new SimpleStringProperty(String.valueOf(materials.get(m)));
+                for (String m : mId.keySet()) {
+                    if (m.equals(arg0.getValue().getId())) {
+                        return new SimpleStringProperty(String.valueOf(mId.get(m)));
                     }
                 }
                 return null;
             }
+            
         });
     }
 
     @FXML
     private void cancelButtonOnAction(ActionEvent e) {
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setDialogPane(new DialogPane() {
-            @Override
-            protected Node createButtonBar() {
-                ButtonBar node = (ButtonBar) super.createButtonBar();
-                node.setButtonOrder(ButtonBar.BUTTON_ORDER_NONE);
-                return node;
-            }
-        });
-
-        alert.getButtonTypes().setAll(ButtonType.NO, ButtonType.YES);
-        ((Button)(alert.getDialogPane().lookupButton(ButtonType.NO))).setDefaultButton(true);
-        ((Button)(alert.getDialogPane().lookupButton(ButtonType.YES))).setDefaultButton(false);
-
+        Alert alert = new Alert(AlertType.CONFIRMATION, "You are cancelling order number " + selectingOrder.getId() + ". Are you sure?", ButtonType.NO, ButtonType.YES);
         alert.showAndWait().ifPresent(new Consumer<ButtonType>() {
             @Override
             public void accept(ButtonType t) {
                 if (t == ButtonType.YES) {
-                    // TODO
-                    boolean result = true;
-                    if (result == true) {
-                        Alert alert = new Alert(AlertType.INFORMATION);
-                        alert.getButtonTypes().setAll(ButtonType.OK);
-                        alert.showAndWait();
-                        initialize();
-                    }
+                    selectingOrder.setStatus(OrderStatus.CANCELLED);
+                    DBConnect.updateOrderStatus(selectingOrder);
+                    Alert alert = new Alert(AlertType.INFORMATION, "Order number " + selectingOrder.getId() + " has been " + OrderStatus.CANCELLED + ".");
+                    alert.getButtonTypes().setAll(ButtonType.OK);
+                    alert.showAndWait();
+                    initialize();
                 }
             }
         });
@@ -268,16 +252,12 @@ public class NewOrdersController extends AbstractPageOrderController {
 
     @Override
     protected void confirmButtonOnAction(ActionEvent e) {
-        // TODO
-        boolean result = true;
-            if (result == true) {
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.getButtonTypes().setAll(ButtonType.OK);
-                alert.showAndWait();
-                initialize();
-            } else {
-                
-            }
+        selectingOrder.setStatus(OrderStatus.CONSTURCTING);
+        DBConnect.updateOrderStatus(selectingOrder);
+        Alert alert = new Alert(AlertType.INFORMATION, "Order number " + selectingOrder.getId() + " has successfully updated to " + OrderStatus.CONSTURCTING + ".");
+        alert.getButtonTypes().setAll(ButtonType.OK);
+        alert.showAndWait();
+        initialize();
     }
 
     @Override

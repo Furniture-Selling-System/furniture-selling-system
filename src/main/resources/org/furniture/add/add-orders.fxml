@@ -39,7 +39,7 @@
             </Text>
             <Button fx:id="cancelButton" cancelButton="true" layoutX="1155.0" layoutY="671.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" text="Cancel" />
             <Button fx:id="createButton" defaultButton="true" layoutX="1244.0" layoutY="671.0" mnemonicParsing="false" onAction="#createButtonOnAction" text="Create" />
-            <ComboBox fx:id="selectCustomerComboBox" editable="true" layoutX="249.0" layoutY="174.0" onAction="#selectCustomerComboBoxOnAction" prefHeight="25.0" prefWidth="213.0" />
+            <ComboBox fx:id="selectCustomerComboBox" editable="true" layoutX="249.0" layoutY="174.0" onAction="#selectCustomerComboBoxOnAction" onKeyTyped="#selectCustomerComboBoxOnKeyTyped" prefHeight="25.0" prefWidth="213.0" />
             <Text layoutX="71.0" layoutY="194.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select customers">
                <font>
                   <Font size="18.0" />
@@ -51,19 +51,19 @@
                   <Font size="18.0" />
                </font>
             </Text>
-            <TextField fx:id="customerNameTextField" layoutX="249.0" layoutY="293.0" />
+            <TextField fx:id="customerNameTextField" disable="true" layoutX="249.0" layoutY="293.0" />
             <Text layoutX="71.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Name">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <TextField fx:id="customerPhoneTextField" layoutX="249.0" layoutY="328.0" />
+            <TextField fx:id="customerPhoneTextField" disable="true" layoutX="249.0" layoutY="328.0" />
             <Text layoutX="71.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Phone">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <TextArea fx:id="customerAddressTextArea" layoutX="249.0" layoutY="367.0" prefHeight="105.0" prefWidth="200.0" wrapText="true" />
+            <TextArea fx:id="customerAddressTextArea" disable="true" layoutX="249.0" layoutY="367.0" prefHeight="105.0" prefWidth="200.0" wrapText="true" />
             <Text layoutX="71.0" layoutY="387.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Address">
                <font>
                   <Font size="18.0" />
