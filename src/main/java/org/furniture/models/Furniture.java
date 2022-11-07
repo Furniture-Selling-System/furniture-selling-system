@@ -33,7 +33,7 @@ public class Furniture {
         this.name = name;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return this.price;
     }
 
@@ -51,11 +51,6 @@ public class Furniture {
 
     @Override
     public String toString() {
-        return "Furniture{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", materials=" + materials +
-                "}\n";
+        return id + " : " + name;
     }
 }

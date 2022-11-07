@@ -11,7 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-public class AddCustomer extends AbstractPageController {
+public class AddCustomerController extends AbstractPageController {
 
     @FXML
     TextField idTextField;

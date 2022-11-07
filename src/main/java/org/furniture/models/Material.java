@@ -61,11 +61,6 @@ public class Material {
 
     @Override
     public String toString() {
-        return "Material{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", quantity=" + quantity +
-                ", minimum=" + minimum +
-                '}';
+        return id + " : " + name;
     }
 }

@@ -30,7 +30,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
 
-public class CreateNewOrderController extends AbstractPageController {
+public class AddOrderController extends AbstractPageController {
 
     @FXML private ComboBox<String> selectCustomerComboBox;
     @FXML private TextField customerIdTextField;
@@ -122,7 +122,7 @@ public class CreateNewOrderController extends AbstractPageController {
         List<Customer> cList = DBConnect.getCustomers();
         customers = FXCollections.observableList(cList);
 
-        List<Furniture> fList = DBConnect.getFurnituresList();
+        List<Furniture> fList = DBConnect.getFurnitureList();
         furnitures = FXCollections.observableList(fList);
         System.out.println(furnitures);
     }
