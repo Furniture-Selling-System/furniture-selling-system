@@ -52,14 +52,14 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="quantityTextField" layoutX="649.0" layoutY="380.0" prefHeight="25.0" prefWidth="75.0" />
+            <TextField fx:id="quantityTextField" alignment="CENTER_RIGHT" layoutX="649.0" layoutY="380.0" prefHeight="25.0" prefWidth="75.0" />
             <Label layoutX="509.0" layoutY="432.0" text="minimum material">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
             <Button fx:id="CancelButton" layoutX="1130.0" layoutY="670.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" text="Cancle" />
-            <TextField fx:id="minimumTextField" layoutX="649.0" layoutY="432.0" prefHeight="25.0" prefWidth="75.0" />
+            <TextField fx:id="minimumTextField" alignment="CENTER_RIGHT" layoutX="649.0" layoutY="432.0" prefHeight="25.0" prefWidth="75.0" />
          </children>
       </AnchorPane>
    </children>

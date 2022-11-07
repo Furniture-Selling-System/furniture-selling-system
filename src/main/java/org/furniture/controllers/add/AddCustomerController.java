@@ -36,17 +36,26 @@ public class AddCustomerController extends AbstractPageController {
 
     public void confirmButtonOnAction(ActionEvent actionEvent) throws IOException {
         if (validation()) {
-            Customer customer = new Customer(idTextField.getText(),
-                    nameTextField.getText(),
-                    addressTextArea.getText(),
-                    phoneTextField.getText());
-            DBConnect.insertCustomer(customer);
+            try {
+                Customer customer = new Customer(idTextField.getText(),
+                        nameTextField.getText(),
+                        addressTextArea.getText(),
+                        phoneTextField.getText());
+                DBConnect.insertCustomer(customer);
 
-            Alert alert = new Alert(AlertType.INFORMATION, "User has been successfully added.");
+                Alert alert = new Alert(AlertType.INFORMATION, "User has been successfully added.");
+                alert.getButtonTypes().setAll(ButtonType.OK);
+                alert.showAndWait();
+
+                UIManager.setPage(Page.CUSTOMERS_PAGE);
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "User can't be created.");
             alert.getButtonTypes().setAll(ButtonType.OK);
             alert.showAndWait();
-
-            UIManager.setPage(Page.CUSTOMERS_PAGE);
         }
     }
 
@@ -60,7 +69,9 @@ public class AddCustomerController extends AbstractPageController {
         return str.matches("\\d+");
     }
 
-    private boolean validation(){
+    private boolean validation() {
+        if (phoneTextField.getLength() != 10 && phoneTextField.getText().startsWith("0") && isInt(phoneTextField.getText()))
+            return false;
         return true;
     }
 }

@@ -55,7 +55,7 @@
             <Text layoutX="833.0" layoutY="338.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Name" />
             <TextField fx:id="customerNameTextField" disable="true" layoutX="1009.0" layoutY="321.0" prefHeight="25.0" prefWidth="195.0" />
             <Text layoutX="833.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Phone" />
-            <TextField fx:id="customerPhoneTextField" disable="true" layoutX="1009.0" layoutY="374.0" prefHeight="25.0" prefWidth="195.0" />
+            <TextField fx:id="customerPhoneTextField" alignment="CENTER_RIGHT" disable="true" layoutX="1009.0" layoutY="374.0" prefHeight="26.0" prefWidth="97.0" />
             <Text layoutX="833.0" layoutY="450.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Address" />
             <TextArea fx:id="customerAddressTextArea" disable="true" layoutX="1009.0" layoutY="437.0" prefHeight="185.0" prefWidth="200.0" wrapText="true" />
          </children>

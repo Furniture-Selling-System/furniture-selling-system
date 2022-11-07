@@ -224,7 +224,7 @@ public class DBConnect {
         List<String> listID = new ArrayList<>();
         try {
             ResultSet rs = null;
-            rs = query("SELECT m_id  FROM (SELECT m.id m_id,SUM(bom.spend) sum_spend,m.quantity,m.minimum FROM sale_order_list AS ol\n" +
+            rs = query("SELECT m_id  FROM (SELECT m.id m_id,SUM(bom.spend * ol.quantity) sum_spend,m.quantity,m.minimum FROM sale_order_list AS ol\n" +
                     "                           INNER JOIN sale_order AS so\n" +
                     "                               ON so.id = ol.fk_sale_order_id\n" +
                     "                           INNER JOIN furniture AS f\n" +
@@ -505,7 +505,7 @@ public class DBConnect {
     public static boolean checkOrderCanBeConstruction(String id) {
         try {
             ResultSet rs = query("SELECT SUM(IF(quantity > sum_spend,0,-1)) check_status \n" +
-                    "   FROM (SELECT m.id m_id,SUM(bom.spend) sum_spend,m.quantity FROM sale_order_list AS ol\n" +
+                    "   FROM (SELECT m.id m_id,SUM(bom.spend * ol.quantity) sum_spend,m.quantity FROM sale_order_list AS ol\n" +
                     "                           INNER JOIN sale_order AS so\n" +
                     "                               ON so.id = ol.fk_sale_order_id\n" +
                     "                           INNER JOIN furniture AS f\n" +
@@ -523,13 +523,13 @@ public class DBConnect {
         }
     }
 
-    private static void changeSaleOrderToConstruction(String orderID) {
+    public static void changeSaleOrderToConstruction(String orderID) {
         if (checkOrderCanBeConstruction(orderID)) {
             try {
                 query("UPDATE sale_order\n" +
                         "SET furniture_status=" + OrderStatus.CONSTURCTING + "\n" +
                         "WHERE id=" + orderID);
-                ResultSet rs = query("SELECT m.id m_id,SUM(bom.spend) sum_spend,m.quantity FROM sale_order_list AS ol\n" +
+                ResultSet rs = query("SELECT m.id m_id,SUM(bom.spend * ol.quantity) sum_spend,m.quantity FROM sale_order_list AS ol\n" +
                         "                           INNER JOIN sale_order AS so\n" +
                         "                               ON so.id = ol.fk_sale_order_id\n" +
                         "                           INNER JOIN furniture AS f\n" +
@@ -686,7 +686,7 @@ public class DBConnect {
             e.printStackTrace();
         }
         String[] strArr = str.substring(0, 7).split("-");
-        
+
         List<Integer> yQ = new ArrayList<>();
         yQ.add(Integer.parseInt(strArr[0]));
         yQ.add(Integer.parseInt(strArr[1]));

@@ -3,6 +3,7 @@ package org.furniture.controllers;
 import java.io.IOException;
 import java.util.List;
 
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import org.furniture.UIManager;
 import org.furniture.enums.Page;
@@ -14,9 +15,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 
 public class FurnitureController extends AbstractPageController {
 
@@ -52,11 +50,25 @@ public class FurnitureController extends AbstractPageController {
 
     @FXML
     private void confirmButtonOnAction(ActionEvent e) throws InvalidQuantityException {
-        selectingFurniture = furnitureListView.getSelectionModel().getSelectedItem();
-        selectingFurniture.setPrice(Integer.parseInt(furniturePriceTextField.getText()));
-        DBConnect.updateFurniture(selectingFurniture);
-        clearSelectMaterial();
-        showMaterialListView();
+        if (validation()){
+            try {
+                selectingFurniture = furnitureListView.getSelectionModel().getSelectedItem();
+                selectingFurniture.setPrice(Integer.parseInt(furniturePriceTextField.getText()));
+                DBConnect.updateFurniture(selectingFurniture);
+                clearSelectMaterial();
+                showMaterialListView();
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Furniture has been updated.");
+                alert.getButtonTypes().setAll(ButtonType.OK);
+                alert.showAndWait();
+            } catch (NumberFormatException ex) {
+                throw new RuntimeException(ex);
+            }
+        }else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Furniture can not update.");
+            alert.getButtonTypes().setAll(ButtonType.OK);
+            alert.showAndWait();
+        }
     }
 
 
@@ -87,6 +99,12 @@ public class FurnitureController extends AbstractPageController {
         showMaterialListView();
         if (searchTextField.getText().isEmpty())
             initialize();
+    }
+
+    private boolean validation(){
+        if(furniturePriceTextField.getLength() > 5)
+            return false;
+        return true;
     }
 
 }

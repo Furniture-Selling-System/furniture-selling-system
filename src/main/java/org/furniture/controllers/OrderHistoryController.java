@@ -48,10 +48,14 @@ public class OrderHistoryController extends AbstractPageController {
             int quarter =   quarterComboBox.getValue();
 
             HashMap<Furniture, Integer> furnitureTreeMap = DBConnect.getFurnitureTreeMapByTime(year, quarter);
+            assert furnitureTreeMap != null;
             for (Furniture f : furnitureTreeMap.keySet()) {
                 furnitureObservableList.add(f);
+                System.out.println(f.toString());
                 furnitureQuantityObservableList.add(furnitureTreeMap.get(f));
+                System.out.println(furnitureTreeMap.get(f));
             }
+            setUp();
         }
     }
 
@@ -147,5 +151,4 @@ public class OrderHistoryController extends AbstractPageController {
         furnitureQuantityObservableList.clear();
         totalIncomeTextField.clear();
     }
-
 }

@@ -45,7 +45,7 @@
                   <TableColumn fx:id="orderDateTableColumn" prefWidth="189.0" text="Order Date" />
                </columns>
             </TableView>
-            <TextField fx:id="totalPriceTextField" disable="true" layoutX="926.0" layoutY="417.0" onKeyTyped="#searchTextFieldOnAction" prefHeight="25.0" prefWidth="265.0" />
+            <TextField fx:id="totalPriceTextField" alignment="CENTER_RIGHT" disable="true" layoutX="926.0" layoutY="417.0" onKeyTyped="#searchTextFieldOnAction" prefHeight="25.0" prefWidth="265.0" />
             <Text layoutX="833.0" layoutY="434.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Price" />
             <TableView fx:id="furnitureTableView" layoutX="772.0" layoutY="60.0" prefHeight="303.0" prefWidth="507.0">
                <columns>

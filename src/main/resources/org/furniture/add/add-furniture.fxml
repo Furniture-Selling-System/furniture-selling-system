@@ -70,7 +70,7 @@
                   <Font size="18.0" />
                </font>
             </Text>
-            <TextField fx:id="furniturePriceTextField" layoutX="338.0" layoutY="387.0" />
+            <TextField fx:id="furniturePriceTextField" alignment="CENTER_RIGHT" layoutX="338.0" layoutY="387.0" />
             <Text layoutX="160.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Furniture Price">
                <font>
                   <Font size="18.0" />
