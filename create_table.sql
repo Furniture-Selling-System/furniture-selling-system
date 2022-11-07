@@ -3,7 +3,7 @@ CREATE TABLE customer
     id      int(5) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     name    varchar(50) NOT NULL UNIQUE,
     address text        NOT NULL,
-    phone   varchar(11) NOT NULL
+    phone   varchar(10) NOT NULL
 );
 
 CREATE TABLE sale_order

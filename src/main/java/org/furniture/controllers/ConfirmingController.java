@@ -46,12 +46,16 @@ public class ConfirmingController extends AbstractPageOrderController {
 
     @Override
     protected void confirmButtonOnAction(ActionEvent e) {
-        selectingOrder.setStatus(OrderStatus.DONE);
-        DBConnect.updateOrderStatus(selectingOrder);
-        Alert alert = new Alert(AlertType.INFORMATION, "Order number " + selectingOrder.getId() + " has successfully " + OrderStatus.DONE + ".");
-        alert.getButtonTypes().setAll(ButtonType.OK);
-        alert.showAndWait();
-        initialize();
+        try {
+            selectingOrder.setStatus(OrderStatus.DONE);
+            DBConnect.updateOrderStatus(selectingOrder);
+            Alert alert = new Alert(AlertType.INFORMATION, "Order number " + selectingOrder.getId() + " has successfully " + OrderStatus.DONE + ".");
+            alert.getButtonTypes().setAll(ButtonType.OK);
+            alert.showAndWait();
+            initialize();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override

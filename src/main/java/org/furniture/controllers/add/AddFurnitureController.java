@@ -85,4 +85,10 @@ public class AddFurnitureController extends AbstractPageController {
     private void cancelButtonOnAction(ActionEvent e) throws IOException {
         UIManager.setPage(Page.CUSTOMERS_PAGE);
     }
+
+    private boolean validation(){
+        if(furniturePriceTextField.getLength() > 5)
+            return false;
+        return true;
+    }
 }

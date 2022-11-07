@@ -68,20 +68,30 @@ public class CustomersController extends AbstractPageController {
     }
 
     @FXML
-    private void confirmButtonOnAction(ActionEvent e){
-        selectingCustomer = customerListView.getSelectionModel().getSelectedItem();
-        selectingCustomer.setName(nameTextField.getText());
-        selectingCustomer.setAddress(addressTextArea.getText());
-        selectingCustomer.setPhone(phoneTextField.getText());
-        DBConnect.updateCustomer(selectingCustomer);
+    private void confirmButtonOnAction(ActionEvent e) {
+        if (validation()) {
+            try {
+                selectingCustomer = customerListView.getSelectionModel().getSelectedItem();
+                selectingCustomer.setName(nameTextField.getText());
+                selectingCustomer.setAddress(addressTextArea.getText());
+                selectingCustomer.setPhone(phoneTextField.getText());
+                DBConnect.updateCustomer(selectingCustomer);
 
-        Alert alert = new Alert(AlertType.INFORMATION, "Customer has been updated.");
-        alert.getButtonTypes().setAll(ButtonType.OK);
-        alert.showAndWait();
-        initialize();
+                Alert alert = new Alert(AlertType.INFORMATION, "Customer has been updated.");
+                alert.getButtonTypes().setAll(ButtonType.OK);
+                alert.showAndWait();
+                initialize();
 
-        clearSelectMaterial();
-        showMaterialListView();
+                clearSelectMaterial();
+                showMaterialListView();
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        }else {
+            Alert alert = new Alert(AlertType.INFORMATION, "Customer can not update.");
+            alert.getButtonTypes().setAll(ButtonType.OK);
+            alert.showAndWait();
+        }
     }
 
 
@@ -115,4 +125,13 @@ public class CustomersController extends AbstractPageController {
             initialize();
     }
 
+    private boolean isInt(String str) {
+        return str.matches("\\d+");
+    }
+
+    private boolean validation() {
+        if (phoneTextField.getLength() != 10 && phoneTextField.getText().startsWith("0") && isInt(phoneTextField.getText()))
+            return false;
+        return true;
+    }
 }

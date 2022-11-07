@@ -247,12 +247,24 @@ public class NewOrdersController extends AbstractPageOrderController {
 
     @Override
     protected void confirmButtonOnAction(ActionEvent e) {
-        selectingOrder.setStatus(OrderStatus.CONSTURCTING);
-        DBConnect.updateOrderStatus(selectingOrder);
-        Alert alert = new Alert(AlertType.INFORMATION, "Order number " + selectingOrder.getId() + " has successfully updated to " + OrderStatus.CONSTURCTING + ".");
-        alert.getButtonTypes().setAll(ButtonType.OK);
-        alert.showAndWait();
-        initialize();
+        if(DBConnect.checkOrderCanBeConstruction(selectingOrder.getId())) {
+            try {
+                selectingOrder.setStatus(OrderStatus.CONSTURCTING);
+                DBConnect.updateOrderStatus(selectingOrder);
+                DBConnect.changeSaleOrderToConstruction(selectingOrder.getId());
+
+                Alert alert = new Alert(AlertType.INFORMATION, "Order number " + selectingOrder.getId() + " has successfully updated to " + OrderStatus.CONSTURCTING + ".");
+                alert.getButtonTypes().setAll(ButtonType.OK);
+                alert.showAndWait();
+                initialize();
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        }   else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Order number " + selectingOrder.getId() + " can't construction because material not enough");
+            alert.getButtonTypes().setAll(ButtonType.OK);
+            alert.showAndWait();
+        }
     }
 
     @Override

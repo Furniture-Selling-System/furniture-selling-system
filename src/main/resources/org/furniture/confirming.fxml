@@ -14,19 +14,20 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.furniture.controllers.ConfirmingController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="1366.0">
-        <items>
-          <Button fx:id="newOrdersNavigationButton" mnemonicParsing="false" onAction="#newOrdersNavigationButtonOnAction" text="New Orders" />
-            <Button fx:id="constructingNavigationButton" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#constructingNavigationButtonOnAction" text="Constructing" />
-            <Button fx:id="shippingNavigationButton" layoutX="66.0" layoutY="13.0" mnemonicParsing="false" onAction="#shippingNavigationButtonOnAction" text="Shipping" />
-            <Button fx:id="confirmingNavigationButton" disable="true" layoutX="122.0" layoutY="13.0" mnemonicParsing="false" onAction="#confirmingNavigationButtonOnAction" text="Confirming" />
-            <Separator orientation="VERTICAL" />
-            <Button fx:id="orderHistoryNavigationButton" mnemonicParsing="false" onAction="#orderHistoryNavigationButtonOnAction" text="Order History" />
-            <Region prefWidth="700.0" />
-            <Separator orientation="VERTICAL" />
-            <Button fx:id="customersNavigationButton" layoutX="249.0" layoutY="13.0" mnemonicParsing="false" onAction="#customersNavigationButtonOnAction" text="Customers" />
-            <Button fx:id="materialsNavigationButton" layoutX="329.0" layoutY="13.0" mnemonicParsing="false" onAction="#materialsNavigationButtonOnAction" text="Materials" />
-            <Button fx:id="furnitureNavigationButton" layoutX="610.0" layoutY="13.0" mnemonicParsing="false" onAction="#furnitureNavigationButtonOnAction" text="Furniture" />
-        </items>
+          <items>
+              <Button fx:id="newOrdersNavigationButton" mnemonicParsing="false" onAction="#newOrdersNavigationButtonOnAction" text="New Orders" />
+              <Button fx:id="constructingNavigationButton" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#constructingNavigationButtonOnAction" text="Constructing" />
+              <Button fx:id="shippingNavigationButton" layoutX="66.0" layoutY="13.0" mnemonicParsing="false" onAction="#shippingNavigationButtonOnAction" text="Shipping" />
+              <Button fx:id="confirmingNavigationButton" disable="true" layoutX="122.0" layoutY="13.0" mnemonicParsing="false" onAction="#confirmingNavigationButtonOnAction" text="Confirming" />
+              <Separator orientation="VERTICAL" />
+              <Button fx:id="orderHistoryNavigationButton" mnemonicParsing="false" onAction="#orderHistoryNavigationButtonOnAction" text="Order History" />
+              <Button fx:id="checkMaterialNavigationButton" mnemonicParsing="false" onAction="#checkMaterialNavigationButtonOnAction" text="Check Material" />
+              <Region prefWidth="605.0" />
+              <Separator orientation="VERTICAL" />
+              <Button fx:id="customersNavigationButton" layoutX="249.0" layoutY="13.0" mnemonicParsing="false" onAction="#customersNavigationButtonOnAction" text="Customers" />
+              <Button fx:id="materialsNavigationButton" layoutX="329.0" layoutY="13.0" mnemonicParsing="false" onAction="#materialsNavigationButtonOnAction" text="Materials" />
+              <Button fx:id="furnitureNavigationButton" layoutX="610.0" layoutY="13.0" mnemonicParsing="false" onAction="#furnitureNavigationButtonOnAction" text="Furniture" />
+          </items>
       </ToolBar>
       <AnchorPane layoutY="40.0" prefHeight="728.0" prefWidth="1366.0">
          <children>
@@ -45,7 +46,7 @@
                   <TableColumn fx:id="orderDateTableColumn" prefWidth="189.0" text="Order Date" />
                </columns>
             </TableView>
-            <TextField fx:id="totalPriceTextField" disable="true" layoutX="926.0" layoutY="417.0" onKeyTyped="#searchTextFieldOnAction" prefHeight="25.0" prefWidth="265.0" />
+            <TextField fx:id="totalPriceTextField" alignment="CENTER_RIGHT" disable="true" layoutX="926.0" layoutY="417.0" onKeyTyped="#searchTextFieldOnAction" prefHeight="25.0" prefWidth="265.0" />
             <Text layoutX="833.0" layoutY="434.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Price" />
             <TableView fx:id="furnitureTableView" layoutX="772.0" layoutY="60.0" prefHeight="303.0" prefWidth="507.0">
                <columns>

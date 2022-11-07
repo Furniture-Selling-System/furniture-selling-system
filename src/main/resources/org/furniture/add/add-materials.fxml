@@ -20,10 +20,11 @@
             <Button fx:id="confirmingNavigationButton" layoutX="122.0" layoutY="13.0" mnemonicParsing="false" onAction="#confirmingNavigationButtonOnAction" text="Confirming" />
             <Separator orientation="VERTICAL" />
             <Button fx:id="orderHistoryNavigationButton" mnemonicParsing="false" onAction="#orderHistoryNavigationButtonOnAction" text="Order History" />
-            <Region prefWidth="700.0" />
+            <Button fx:id="checkMaterialNavigationButton" mnemonicParsing="false" onAction="#checkMaterialNavigationButtonOnAction" text="Check Material" />
+            <Region prefWidth="605.0" />
             <Separator orientation="VERTICAL" />
             <Button fx:id="customersNavigationButton" layoutX="249.0" layoutY="13.0" mnemonicParsing="false" onAction="#customersNavigationButtonOnAction" text="Customers" />
-            <Button fx:id="materialsNavigationButton" disable="true" layoutX="329.0" layoutY="13.0" mnemonicParsing="false" onAction="#materialsNavigationButtonOnAction" text="Materials" />
+            <Button fx:id="materialsNavigationButton"  disable="true" layoutX="329.0" layoutY="13.0" mnemonicParsing="false" onAction="#materialsNavigationButtonOnAction" text="Materials" />
             <Button fx:id="furnitureNavigationButton" layoutX="610.0" layoutY="13.0" mnemonicParsing="false" onAction="#furnitureNavigationButtonOnAction" text="Furniture" />
          </items>
       </ToolBar>
@@ -52,14 +53,14 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="quantityTextField" layoutX="649.0" layoutY="380.0" prefHeight="25.0" prefWidth="75.0" />
+            <TextField fx:id="quantityTextField" alignment="CENTER_RIGHT" layoutX="649.0" layoutY="380.0" prefHeight="25.0" prefWidth="75.0" />
             <Label layoutX="509.0" layoutY="432.0" text="minimum material">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
             <Button fx:id="CancelButton" layoutX="1130.0" layoutY="670.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" text="Cancle" />
-            <TextField fx:id="minimumTextField" layoutX="649.0" layoutY="432.0" prefHeight="25.0" prefWidth="75.0" />
+            <TextField fx:id="minimumTextField" alignment="CENTER_RIGHT" layoutX="649.0" layoutY="432.0" prefHeight="25.0" prefWidth="75.0" />
          </children>
       </AnchorPane>
    </children>
