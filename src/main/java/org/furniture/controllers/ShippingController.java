@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.furniture.enums.OrderStatus;
+import org.furniture.models.Customer;
 import org.furniture.models.Furniture;
 import org.furniture.models.Order;
 import org.furniture.services.DBConnect;
@@ -19,6 +20,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -37,7 +39,7 @@ public class ShippingController extends AbstractPageOrderController {
     @FXML TableColumn<Furniture, String> furnitureNameTableColumn;
     @FXML TableColumn<Furniture, String> furnitureQuantityTableColumn;
     @FXML TextField customerNameTextField;
-    @FXML TextField customerPhoneTextFIeld;
+    @FXML TextField customerPhoneTextField;
     @FXML TextArea customerAddressTextArea;
 
     private ObservableList<Order> oList;
@@ -47,15 +49,12 @@ public class ShippingController extends AbstractPageOrderController {
 
     @Override
     protected void confirmButtonOnAction(ActionEvent e) {
-        boolean result = true;
-            if (result == true) {
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.getButtonTypes().setAll(ButtonType.OK);
-                alert.showAndWait();
-                initialize();
-            } else {
-                
-            }
+        selectingOrder.setStatus(OrderStatus.CONFIRMING);
+        DBConnect.updateOrderStatus(selectingOrder);
+        Alert alert = new Alert(AlertType.INFORMATION, "Order number " + selectingOrder.getId() + " has successfully updated to " + OrderStatus.CONFIRMING + ".");
+        alert.getButtonTypes().setAll(ButtonType.OK);
+        alert.showAndWait();
+        initialize();
     }
 
     @Override
@@ -149,10 +148,39 @@ public class ShippingController extends AbstractPageOrderController {
             });
 
             confirmButton.setDisable(false);
-
-        } else {
+            customerNameTextField.setText(selectingOrder.getName());
             
+            List<Customer> c = DBConnect.getCustomers();
+            Customer selectingCustomer = null;
+            for (Customer customer : c) {
+                if (customer.getName().equals(selectingOrder.getName())) {
+                    selectingCustomer = customer;
+                    break;
+                }
+            }
+
+            customerPhoneTextField.setText(selectingCustomer.getName());
+            customerAddressTextArea.setText(selectingOrder.getAddress());
         }
+    }
+
+    @FXML
+    private void searchTextFieldOnKeyTyped(KeyEvent e) {
+        clear();
+        getData();
+
+        List<Order> removing = new ArrayList<>();
+        for (Order order : oList) {
+            if (!(order.getName().contains(searchTextField.getText().trim()))) {
+                removing.add(order);
+            }
+        }
+
+        for (Order order : removing) {
+            oList.remove(order);
+        }
+
+        setTableView();
     }
 
 }

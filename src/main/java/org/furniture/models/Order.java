@@ -11,14 +11,14 @@ public class Order {
 
     private String id;
     private String name;
-    private int totalPrice;
+    private double totalPrice;
     private HashMap<Furniture, Integer> furnitures;
     private String address;
     private Date creationDateTime;
     private OrderStatus status;
     private Customer customer;
 
-    public Order(String id, String name, int totalPrice, String address, Date creationDateTime, OrderStatus status, Customer customer) {
+    public Order(String id, String name, double totalPrice, String address, Date creationDateTime, OrderStatus status, Customer customer) {
         this.id = id;
         this.name = name;
         this.totalPrice = totalPrice;
@@ -57,7 +57,7 @@ public class Order {
         return furnitures;
     }
 
-    public int getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 

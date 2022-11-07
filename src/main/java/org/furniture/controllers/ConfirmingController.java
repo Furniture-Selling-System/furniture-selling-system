@@ -22,6 +22,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
@@ -33,8 +34,11 @@ public class ConfirmingController extends AbstractPageOrderController {
     @FXML private TableColumn<Order, String> customerNameTableColumn;
     @FXML private TableColumn<Order, String> orderDateTableColumn;
     @FXML TableView<Furniture> furnitureTableView;
-    @FXML TableColumn<Furniture, String> furnitureNameTableColumn;
-    @FXML TableColumn<Furniture, String> furnitureQuantityTableColumn;
+    @FXML TableColumn<Furniture, String> productNameTableColumn;
+    @FXML TableColumn<Furniture, String> priceTableColumn;
+    @FXML TableColumn<Furniture, String> quantityTableColumn;
+    @FXML TableColumn<Furniture, String> totalPriceTableColumn;
+    @FXML TextField totalPriceTextField;
 
     private ObservableList<Order> oList;
     private ObservableList<Furniture> fList;
@@ -42,15 +46,12 @@ public class ConfirmingController extends AbstractPageOrderController {
 
     @Override
     protected void confirmButtonOnAction(ActionEvent e) {
-        boolean result = true;
-        if (result == true) {
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.getButtonTypes().setAll(ButtonType.OK);
-            alert.showAndWait();
-            initialize();
-        } else {
-            
-        }
+        selectingOrder.setStatus(OrderStatus.DONE);
+        DBConnect.updateOrderStatus(selectingOrder);
+        Alert alert = new Alert(AlertType.INFORMATION, "Order number " + selectingOrder.getId() + " has successfully " + OrderStatus.DONE + ".");
+        alert.getButtonTypes().setAll(ButtonType.OK);
+        alert.showAndWait();
+        initialize();
     }
 
     @Override
@@ -113,9 +114,16 @@ public class ConfirmingController extends AbstractPageOrderController {
             confirmButton.setDisable(false);
 
             HashMap<Furniture, Integer> f = DBConnect.getFurnitureAmountByOrderID(selectingOrder.getId());
+            ArrayList<Furniture> fs = new ArrayList<>(f.keySet());
+            ArrayList<Integer> fsqty = new ArrayList<>();
+            
+            for (Furniture furn : fs) {
+                fsqty.add(f.get(furn));
+            }
+
             fList = FXCollections.observableList(new ArrayList<>(f.keySet()));
             furnitureTableView.setItems(fList);
-            furnitureNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Furniture,String>,ObservableValue<String>>() {
+            productNameTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Furniture,String>,ObservableValue<String>>() {
 
                 @Override
                 public ObservableValue<String> call(CellDataFeatures<Furniture, String> arg0) {
@@ -123,7 +131,15 @@ public class ConfirmingController extends AbstractPageOrderController {
                 }
                 
             });
-            furnitureQuantityTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Furniture,String>,ObservableValue<String>>() {
+            priceTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Furniture,String>,ObservableValue<String>>() {
+
+                @Override
+                public ObservableValue<String> call(CellDataFeatures<Furniture, String> arg0) {
+                    return new SimpleStringProperty(String.valueOf(arg0.getValue().getPrice()));
+                }
+                
+            });
+            quantityTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Furniture,String>,ObservableValue<String>>() {
 
                 @Override
                 public ObservableValue<String> call(CellDataFeatures<Furniture, String> arg0) {
@@ -136,10 +152,48 @@ public class ConfirmingController extends AbstractPageOrderController {
                     return null;
                 }
             });
-        } else {
-            
+            totalPriceTableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Furniture,String>,ObservableValue<String>>() {
+
+                @Override
+                public ObservableValue<String> call(CellDataFeatures<Furniture, String> arg0) {
+                    for (int i = 0 ; i < fs.size() ; ++i) {
+                        if (fs.get(i).getName().equals(arg0.getValue().getName())) {
+                            double totalPrice = arg0.getValue().getPrice() * fsqty.get(i);
+                            return new SimpleStringProperty(String.valueOf(totalPrice));
+                        }
+                    }
+                    return null;
+                }
+            });
+        
+            double price = 0;
+            for (int i = 0 ; i < fs.size() ; ++i) {
+                price += fs.get(i).getPrice() * fsqty.get(i);
+            }
+    
+            totalPriceTextField.setText(String.valueOf(price));
+        
         }
 
+    }
+
+    @FXML
+    private void searchTextFieldOnKeyTyped(KeyEvent e) {
+        clear();
+        getData();
+
+        List<Order> removing = new ArrayList<>();
+        for (Order order : oList) {
+            if (!(order.getName().contains(searchTextField.getText().trim()))) {
+                removing.add(order);
+            }
+        }
+
+        for (Order order : removing) {
+            oList.remove(order);
+        }
+
+        showOrders();
     }
 
 }
