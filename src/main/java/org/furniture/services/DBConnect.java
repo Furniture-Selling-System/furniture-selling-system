@@ -116,7 +116,7 @@ public class DBConnect {
                     "WHERE m.minimum > m.quantity");
 
             while (rs.next()) {
-                if (! idMaterialFirstTable.contains(rs.getString("id")))
+                if (!idMaterialFirstTable.contains(rs.getString("id")))
                     materialIntegerHashMap.put(getMaterialByID(rs.getString("id")), rs.getInt("need"));
             }
             return materialIntegerHashMap;
@@ -257,7 +257,7 @@ public class DBConnect {
         return createFurniture("WHERE f.id =" + id);
     }
 
-    public static List<Furniture> getFurnituresList() {
+    public static List<Furniture> getFurnitureList() {
         return createFurnitureList("SELECT f.id FROM furniture f");
     }
 
@@ -289,6 +289,30 @@ public class DBConnect {
             throw new RuntimeException(e);
         }
         return furnitureIntegerHashMap;
+    }
+
+    public static HashMap<Furniture, Integer> getFurnitureTreeMapByTime(int year, int quarter) {
+        if (year <= 0 || quarter <= 0 || quarter > 4) return null;
+
+        HashMap<Furniture, Integer> furnitureIntegerTreeMap = new HashMap<Furniture,Integer>();
+        ResultSet rs = null;
+        try {
+            rs = query("SELECT ol.fk_furniture_id f_id,sum(ol.quantity) sum_quantity FROM sale_order so\n" +
+                    "INNER JOIN sale_order_list ol\n" +
+                    "ON ol.fk_sale_order_id = so.id\n" +
+                    "WHERE YEAR(so.create_date) =" + year + "\n" +
+                    "AND QUARTER(so.create_date) =" + quarter + "\n" +
+                    "AND so.furniture_status=" + OrderStatus.DONE.getStatus() + "\n" +
+                    "GROUP BY ol.fk_furniture_id");
+            while (rs.next()) {
+                furnitureIntegerTreeMap.put(getFurnitureByID(rs.getString("f_id")),
+                        rs.getInt("sum_quantity"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return furnitureIntegerTreeMap;
     }
 
     public static List<Material> createMaterialsList(String query) {
@@ -372,7 +396,7 @@ public class DBConnect {
         return orderArrayList;
     }
 
-    public static Order createOrderByID(String orderID){
+    public static Order createOrderByID(String orderID) {
         Order order = null;
         try {
             ResultSet rs = null;
@@ -383,7 +407,7 @@ public class DBConnect {
                     "ON ol.fk_sale_order_id = so.id\n" +
                     "WHERE so.id=" + orderID);
             while (rs.next()) {
-                if (order == null){
+                if (order == null) {
                     order = new Order(rs.getString("id"),
                             rs.getString("c_name"),
                             rs.getInt("cost_total"),
@@ -471,7 +495,7 @@ public class DBConnect {
     public static boolean updateOrder(String orderID, OrderStatus status) {
         try {
             queryUpdate("UPDATE sale_order\n" +
-                    "SET furniture_status='" + status.getStatus() + "'\n" +
+                    "SET furniture_status='" + status.getStatus() + "\n" +
                     "WHERE id=" + orderID);
             return true;
         } catch (Exception e) {
@@ -510,6 +534,8 @@ public class DBConnect {
 //            System.out.println("Need : " + materialIntegerHashMap.get(m));
 //        }
 //        System.out.println(materialIntegerHashMap.size());
+
+        System.out.println(getFurnitureTreeMapByTime(2022,4));
     }
 }
 
