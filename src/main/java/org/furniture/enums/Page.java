@@ -12,7 +12,8 @@ public enum Page {
     FURNITURE_PAGE      ("/org/furniture/furniture"),
     MATERIALS_PAGE      ("/org/furniture/materials"),
 
-    CREATE_ORDER_PAGE   ("/org/furniture/create-new-orders");
+    CREATE_ORDER_PAGE   ("/org/furniture/create-new-orders"),
+    CREATE_CUSTOMER_PAGE("/org/furniture/create-customer");
 
     private String fxml;
 

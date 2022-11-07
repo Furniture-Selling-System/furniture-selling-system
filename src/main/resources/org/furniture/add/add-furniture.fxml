@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -29,34 +31,52 @@
       </ToolBar>
       <AnchorPane layoutY="40.0" prefHeight="728.0" prefWidth="1366.0">
          <children>
-            <Text layoutX="41.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Furniture's Price">
+            <Text layoutX="41.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Furniture">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField fx:id="searchTextField" layoutX="171.0" layoutY="133.0" onAction="#searchTextFieldOnAction" onKeyTyped="#searchTextFieldOnAction" prefHeight="25.0" prefWidth="365.0" promptText="Enter customer name to search for orders..." />
-            <ListView fx:id="furnitureListView" layoutX="171.0" layoutY="195.0" onMouseClicked="#ordersListViewOnMouseClicked" prefHeight="369.0" prefWidth="365.0" />
             <Separator layoutX="680.0" layoutY="80.0" orientation="VERTICAL" prefHeight="615.0" prefWidth="6.0" />
             <Button fx:id="createButton" layoutX="1219.0" layoutY="671.0" mnemonicParsing="false" onAction="#createButtonOnAction" text="Create" />
-            <TextField fx:id="furnitureIdTextField" disable="true" layoutX="981.0" layoutY="317.0" />
-            <Text layoutX="803.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Furniture ID">
+            <TableView fx:id="materialTableView" layoutX="808.0" layoutY="315.0" onMouseClicked="#furnitureTableViewOnMouseClicked" prefHeight="303.0" prefWidth="382.0">
+               <columns>
+                  <TableColumn fx:id="materialNameTableColumn" prefWidth="279.0" text="Material Name" />
+                  <TableColumn fx:id="quantityTableColumn" prefWidth="102.0" text="Quantity" />
+               </columns>
+            </TableView>
+            <ComboBox fx:id="selectMaterialComboBox" editable="true" layoutX="976.0" layoutY="171.0" onAction="#selectMaterialComboBoxOnAction" prefHeight="25.0" prefWidth="213.0" />
+            <Text layoutX="798.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select material">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <TextField fx:id="furnitureNameTextField" disable="true" layoutX="981.0" layoutY="352.0" />
-            <Text layoutX="803.0" layoutY="371.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Furniture Name">
+            <Text layoutX="798.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="quantity">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <TextField fx:id="furniturePriceTextField" layoutX="981.0" layoutY="387.0" />
-            <Text layoutX="803.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Furniture Price">
+            <Button fx:id="addButton" layoutX="1163.0" layoutY="211.0" mnemonicParsing="false" onAction="#addButtonOnAction" text="Add" />
+            <Button fx:id="deleteButton" layoutX="1226.0" layoutY="593.0" mnemonicParsing="false" onAction="#deleteButtonOnAction" text="Delete" />
+            <TextField fx:id="quantityTextField" layoutX="976.0" layoutY="210.0" onAction="#quantityTextFieldOnAction" prefHeight="25.0" prefWidth="51.0" />
+            <TextField fx:id="furnitureIdTextField" disable="true" layoutX="338.0" layoutY="317.0" />
+            <Text layoutX="160.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Furniture ID">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <Button fx:id="createButton1" layoutX="561.0" layoutY="539.0" mnemonicParsing="false" onAction="#createButtonOnAction" text="Add" />
+            <TextField fx:id="furnitureNameTextField" layoutX="338.0" layoutY="352.0" />
+            <Text layoutX="160.0" layoutY="371.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Furniture Name">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <TextField fx:id="furniturePriceTextField" layoutX="338.0" layoutY="387.0" />
+            <Text layoutX="160.0" layoutY="406.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Furniture Price">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Button fx:id="createButton1" layoutX="1138.0" layoutY="671.0" mnemonicParsing="false" onAction="#createButtonOnAction" text="Cancel" />
          </children>
       </AnchorPane>
    </children>

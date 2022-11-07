@@ -1,10 +1,11 @@
-package org.furniture.controllers;
+package org.furniture.controllers.add;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.furniture.UIManager;
+import org.furniture.controllers.AbstractPageController;
 import org.furniture.enums.Page;
 import org.furniture.models.Customer;
 import org.furniture.models.Furniture;

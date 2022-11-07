@@ -120,4 +120,9 @@ public class CustomersController extends AbstractPageController {
         addressTextArea.clear();
     }
 
+    @FXML
+    private void editButtonOnAction(ActionEvent e) {
+        
+    }
+
 }
