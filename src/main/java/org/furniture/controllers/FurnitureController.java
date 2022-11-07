@@ -1,11 +1,12 @@
 package org.furniture.controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.input.KeyEvent;
 import org.furniture.UIManager;
 import org.furniture.enums.Page;
+import org.furniture.exceptions.InvalidQuantityException;
 import org.furniture.models.Furniture;
 import org.furniture.models.Material;
 import org.furniture.services.DBConnect;
@@ -15,93 +16,78 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 
 public class FurnitureController extends AbstractPageController {
 
     @FXML TextField searchTextField;
-    @FXML ListView<String> furnitureListView;
-    @FXML ComboBox<String> materialComboBox;
-    @FXML TextField quantityTextField;
-    @FXML Button addButton;
-    @FXML TableView<Material> materialTableView;
-    @FXML TableColumn<Material, String> materialNameTableColumn;
-    @FXML TableColumn<Material, String> quantityTableColumn;
-    @FXML Button deleteButton;
+    @FXML ListView<Furniture> furnitureListView;
     @FXML Button editButton;
     @FXML TextField furnitureIdTextField;
     @FXML TextField furnitureNameTextField;
     @FXML TextField furniturePriceTextField;
 
-    private ObservableList<Furniture> furniture;
-
+    private ObservableList<Furniture> data;
     private Furniture selectingFurniture;
 
     @Override
     protected void initialize() {
-        furniture = FXCollections.observableArrayList();
-
-        clear();
-        searchTextFieldOnAction(null);
+        getData();
+        showMaterialListView();
+        clearSelectMaterial();
+        handleSelectedMaterialListView();
     }
 
-    private void clear() {
-        searchTextField.clear();
-        furniture.clear();
+    public void getData() {
+        List<Furniture> furnitures = DBConnect.getFurnitureList();
+        data = FXCollections.observableList(furnitures);
     }
 
-    @FXML
-    private void searchTextFieldOnAction(ActionEvent e) {
-        furniture.clear();
-
-        furniture = FXCollections.observableList(DBConnect.getFurnitureList());
-
-        List<Furniture> removing = new ArrayList<>();
-        for (Furniture f : furniture) {
-            if (!(f.getName().contains(searchTextField.getText().trim()))) {
-                removing.add(f);
-            }
-        }
-
-        for (Furniture f : removing) {
-            furniture.remove(f);
-        }
-
-        ObservableList<String> fStr = FXCollections.observableArrayList();
-        for (Furniture f : furniture) {
-            fStr.add(f.getName());
-        }
-
-        furnitureListView.setItems(fStr);
+    private void clearSelectMaterial() {
+        furnitureListView.refresh();
+        furnitureIdTextField.clear();
+        furnitureNameTextField.clear();
+        furniturePriceTextField.clear();
     }
 
     @FXML
-    private void furnitureListViewOnMouseClicked(MouseEvent e) {
-        String selectingFurnitureString = furnitureListView.getSelectionModel().getSelectedItem();
-        for (Furniture f : furniture) {
-            if (f.getName().equals(selectingFurnitureString)) {
-                selectingFurniture = f;
-            }
-        }
-
-        furnitureIdTextField.setText(selectingFurniture.getId());
-        furnitureNameTextField.setText(selectingFurniture.getName());
-        furniturePriceTextField.setText(String.valueOf(selectingFurniture.getPrice()));
+    private void confirmButtonOnAction(ActionEvent e) throws InvalidQuantityException {
+        selectingFurniture = furnitureListView.getSelectionModel().getSelectedItem();
+        selectingFurniture.setPrice(Integer.parseInt(furniturePriceTextField.getText()));
+        DBConnect.updateFurniture(selectingFurniture);
+        clearSelectMaterial();
+        showMaterialListView();
     }
-    
+
+
     @FXML
-    private void addButtonOnAction(ActionEvent e) throws IOException {
+    public void addFurnitureButtonOnAction(ActionEvent actionEvent) throws IOException {
         UIManager.setPage(Page.CREATE_FURNITURE_PAGE);
     }
 
+    private void showMaterialListView() {
+        furnitureListView.setItems(data);
+    }
+
+    private void handleSelectedMaterialListView() {
+        furnitureListView.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> showSelectedMaterial(newValue));
+    }
+
+    private void showSelectedMaterial(Furniture furniture) {
+        furnitureIdTextField.setText(furniture.getId());
+        furnitureNameTextField.setText(furniture.getName());
+        furniturePriceTextField.setText(String.valueOf(furniture.getPrice()));
+    }
+
     @FXML
-    private void editButtonOnAction(ActionEvent e) {
-        //TODO:Insert
+    private void searchTextFieldOnAction(KeyEvent e) {
+        List<Furniture> furniture = DBConnect.getFurnituresListByName(searchTextField.getText());
+        data = FXCollections.observableList(furniture);
+        showMaterialListView();
+        if (searchTextField.getText().isEmpty())
+            initialize();
     }
 
 }

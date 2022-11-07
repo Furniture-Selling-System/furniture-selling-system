@@ -1,5 +1,7 @@
 package org.furniture.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,12 +10,13 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
+import org.furniture.UIManager;
+import org.furniture.enums.Page;
 import org.furniture.models.Customer;
+import org.furniture.models.Material;
 import org.furniture.services.DBConnect;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 public class CustomersController extends AbstractPageController {
@@ -31,98 +34,76 @@ public class CustomersController extends AbstractPageController {
     TextArea addressTextArea;
 
     @FXML
-    ListView<String> customerListView;
+    ListView<Customer> customerListView;
 
 
     @FXML
     Button confirmButton;
 
-    private List<Customer> customersList;
+    private ObservableList<Customer> data;
+    private Customer selectingCustomer;
 
     @Override
     protected void initialize() {
-        customersList = DBConnect.getCustomers();
-        showCustomerListView();
-        clearSelectedCustomer();
-        handleSelectedCustomerListView();
+        getData();
+        showMaterialListView();
+        clearSelectMaterial();
+        handleSelectedMaterialListView();
+    }
+
+    public void getData() {
+        List<Customer> customers = DBConnect.getCustomers();
+        data = FXCollections.observableList(customers);
+    }
+
+    private void clearSelectMaterial() {
+        customerListView.refresh();
+        idTextField.clear();
+        nameTextField.clear();
+        addressTextArea.clear();
+        phoneTextField.clear();
+    }
+
+    @FXML
+    private void confirmButtonOnAction(ActionEvent e){
+        selectingCustomer = customerListView.getSelectionModel().getSelectedItem();
+        selectingCustomer.setName(nameTextField.getText());
+        selectingCustomer.setAddress(addressTextArea.getText());
+        selectingCustomer.setPhone(phoneTextField.getText());
+        DBConnect.updateCustomer(selectingCustomer);
+        clearSelectMaterial();
+        showMaterialListView();
+    }
+
+
+    @FXML
+    public void addCustomerButtonOnAction(ActionEvent actionEvent) throws IOException {
+        UIManager.setPage(Page.CREATE_CUSTOMER_PAGE);
+    }
+
+    private void showMaterialListView() {
+        customerListView.setItems(data);
+    }
+
+    private void handleSelectedMaterialListView() {
+        customerListView.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> customerListView(newValue));
+    }
+
+    private void customerListView(Customer customer) {
+        idTextField.setText(customer.getId());
+        nameTextField.setText(customer.getName());
+        addressTextArea.setText(customer.getAddress());
+        phoneTextField.setText(customer.getPhone());
     }
 
     @FXML
     private void searchTextFieldOnAction(KeyEvent e) {
-        customerListView.getItems().clear();
-        customersList = DBConnect.getCustomersByName(searchTextField.getText());
-
-        ArrayList<String> cNames = new ArrayList<>();
-        for (Customer c : customersList) {
-            cNames.add(c.getName());
-        }
-
-        customerListView.getItems().addAll(cNames);
-        customerListView.refresh();
-        if(searchTextField.getText().isEmpty())
+        List<Customer> customers = DBConnect.getCustomersByName(searchTextField.getText());
+        data = FXCollections.observableList(customers);
+        showMaterialListView();
+        if (searchTextField.getText().isEmpty())
             initialize();
-    }
-
-    @FXML
-    private void confirmButtonOnAction(ActionEvent e) {
-        String customerID = idTextField.getText();
-        String customerName = nameTextField.getText();
-        String customerAddress = addressTextArea.getText();
-        String customerPhone = phoneTextField.getText();
-        if (confirmButton.getText().equals("EDIT")) {
-            DBConnect.queryUpdate("UPDATE customer\n" +
-                    "SET name='" + customerName + "',address='" + customerAddress + "',phone='" + customerPhone + "'\n" +
-                    "WHERE id=" + customerID);
-        } else {
-            DBConnect.queryUpdate("INSERT INTO customer(name,address,phone)\n" +
-                    "VALUES ('" + customerName + "','" + customerAddress + "','" + customerPhone + "')");
-        }
-        clearSelectedCustomer();
-        showCustomerListView();
-    }
-
-    private void showCustomerListView() {
-        customerListView.getItems().clear();
-        customersList = DBConnect.getCustomers();
-        ArrayList<String> cNames = new ArrayList<>();
-        for (Customer c : customersList) {
-            cNames.add(c.getId() + " : " + c.getName());
-        }
-        customerListView.getItems().addAll(cNames);
-        customerListView.refresh();
-    }
-
-    private void handleSelectedCustomerListView() {
-        confirmButton.setText("EDIT");
-        customerListView.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> showSelectedCustomer(newValue));
-    }
-
-    private void showSelectedCustomer(String customer) {
-        ResultSet rs = null;
-        try {
-            rs = DBConnect.query("SELECT c.id,c.name,c.address,c.phone FROM customer c\n" +
-                    "WHERE id=" + customer.charAt(0));
-            rs.next();
-            idTextField.setText(rs.getString("id"));
-            nameTextField.setText(rs.getString("name"));
-            phoneTextField.setText(rs.getString("phone"));
-            addressTextArea.setText(rs.getString("address"));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void clearSelectedCustomer() {
-        idTextField.clear();
-        nameTextField.clear();
-        phoneTextField.clear();
-        addressTextArea.clear();
-    }
-
-    @FXML
-    private void editButtonOnAction(ActionEvent e) {
-        
     }
 
 }

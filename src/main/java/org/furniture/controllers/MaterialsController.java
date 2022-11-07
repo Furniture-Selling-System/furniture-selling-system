@@ -11,15 +11,11 @@ import javafx.scene.input.KeyEvent;
 
 import org.furniture.UIManager;
 import org.furniture.enums.Page;
-import org.furniture.models.Furniture;
+import org.furniture.exceptions.InvalidQuantityException;
 import org.furniture.models.Material;
-import org.furniture.models.Order;
 import org.furniture.services.DBConnect;
 
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MaterialsController extends AbstractPageController {
@@ -45,6 +41,7 @@ public class MaterialsController extends AbstractPageController {
     Button addMaterialButton;
 
     private ObservableList<Material> data;
+    private Material selectingMaterial;
 
     @Override
     protected void initialize() {
@@ -54,32 +51,25 @@ public class MaterialsController extends AbstractPageController {
         handleSelectedMaterialListView();
     }
 
-    public void getData(){
+    public void getData() {
         List<Material> materials = DBConnect.getMaterialsList();
         data = FXCollections.observableList(materials);
     }
 
-    private void clearSelectMaterial(){
+    private void clearSelectMaterial() {
+        materialListView.refresh();
         idTextField.clear();
         nameTextField.clear();
         quantityTextField.clear();
         minimumTextField.clear();
     }
-    
-    @FXML
-    private void searchTextFieldOnAction(ActionEvent e) {
-        // TODO
-    }
 
     @FXML
-    private void confirmButtonOnAction(ActionEvent e) {
-        String materialID = idTextField.getText();
-        String materialName = nameTextField.getText();
-        int materialQuantity = Integer.parseInt(minimumTextField.getText());
-        int materialMinimum = Integer.parseInt(quantityTextField.getText());
-        DBConnect.queryUpdate("UPDATE material\n" +
-                "SET name='" + materialName + "',quantity='" + materialQuantity + "',minimum='" + materialMinimum + "'\n" +
-                "WHERE id=" + materialID);
+    private void confirmButtonOnAction(ActionEvent e) throws InvalidQuantityException {
+        selectingMaterial = materialListView.getSelectionModel().getSelectedItem();
+        selectingMaterial.setMinimum(Integer.parseInt(minimumTextField.getText()));
+        selectingMaterial.setQuantity(Integer.parseInt(quantityTextField.getText()));
+        DBConnect.updateMaterial(selectingMaterial);
         clearSelectMaterial();
         showMaterialListView();
     }
@@ -100,36 +90,18 @@ public class MaterialsController extends AbstractPageController {
     }
 
     private void showSelectedMaterial(Material material) {
-        ResultSet rs = null;
-        try {
-            rs = DBConnect.query("SELECT m.id,m.name,m.quantity,m.minimum FROM material m\n" +
-                    "WHERE id=" + material.getId());
-            rs.next();
-            idTextField.setText(rs.getString("id"));
-            nameTextField.setText(rs.getString("name"));
-            quantityTextField.setText(rs.getString("quantity"));
-            minimumTextField.setText(rs.getString("minimum"));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        idTextField.setText(material.getId());
+        nameTextField.setText(material.getName());
+        quantityTextField.setText(String.valueOf(material.getQuantity()));
+        minimumTextField.setText(String.valueOf(material.getMinimum()));
     }
 
     @FXML
-    private void searchTextFieldOnAction(KeyEvent e){
-//        clearSelectMaterial();
-//        getData();
-//
-//        List<Order> removing = new ArrayList<>();
-//        for (Order order : data) {
-//            if (!(order.getName().contains(searchTextField.getText().trim()))) {
-//                removing.add(order);
-//            }
-//        }
-//
-//        for (Order order : removing) {
-//            data.remove(order);
-//        }
-//
-//        showOrders();
+    private void searchTextFieldOnAction(KeyEvent e) {
+        List<Material> materials = DBConnect.getMaterialsListByName(searchTextField.getText());
+        data = FXCollections.observableList(materials);
+        showMaterialListView();
+        if (searchTextField.getText().isEmpty())
+            initialize();
     }
 }
