@@ -4,10 +4,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyEvent;
 
 import org.furniture.UIManager;
@@ -71,6 +74,12 @@ public class CustomersController extends AbstractPageController {
         selectingCustomer.setAddress(addressTextArea.getText());
         selectingCustomer.setPhone(phoneTextField.getText());
         DBConnect.updateCustomer(selectingCustomer);
+
+        Alert alert = new Alert(AlertType.INFORMATION, "Customer has been updated.");
+        alert.getButtonTypes().setAll(ButtonType.OK);
+        alert.showAndWait();
+        initialize();
+
         clearSelectMaterial();
         showMaterialListView();
     }

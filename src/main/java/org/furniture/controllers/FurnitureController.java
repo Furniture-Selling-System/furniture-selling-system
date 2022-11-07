@@ -8,7 +8,6 @@ import org.furniture.UIManager;
 import org.furniture.enums.Page;
 import org.furniture.exceptions.InvalidQuantityException;
 import org.furniture.models.Furniture;
-import org.furniture.models.Material;
 import org.furniture.services.DBConnect;
 
 import javafx.collections.FXCollections;

@@ -423,7 +423,7 @@ public class DBConnect {
                     "GROUP BY ol.fk_furniture_id");
             while (rs.next()) {
                 furnitureIntegerTreeMap.put(getFurnitureByID(rs.getString("f_id")),
-                        rs.getInt("sum_quantity"));
+                rs.getInt("sum_quantity"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -671,6 +671,27 @@ public class DBConnect {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static List<Integer> getOldestYearQuarter() {
+        Statement stmt;
+        ResultSet rs;
+        String str = "";
+        try {
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery("SELECT min(sale_order.create_date) FROM sale_order;");
+            rs.next();
+            str = rs.getString("min(sale_order.create_date)");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        String[] strArr = str.substring(0, 7).split("-");
+        
+        List<Integer> yQ = new ArrayList<>();
+        yQ.add(Integer.parseInt(strArr[0]));
+        yQ.add(Integer.parseInt(strArr[1]));
+
+        return yQ;
     }
 
     public static void test() throws SQLException {

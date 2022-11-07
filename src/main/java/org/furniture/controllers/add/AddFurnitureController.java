@@ -41,9 +41,6 @@ public class AddFurnitureController extends AbstractPageController {
     Button deleteButton;
 
     private ObservableList<Material> data;
-    private Material selectingMaterial;
-
-    private ObservableList<Material> mList;
 
     @Override
     protected void initialize() {

@@ -1,13 +1,19 @@
 package org.furniture.controllers;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.TreeMap;
 
 import org.furniture.models.Furniture;
+import org.furniture.services.DBConnect;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -34,19 +40,18 @@ public class OrderHistoryController extends AbstractPageController {
     private ObservableList<Integer> furnitureQuantityObservableList;
 
     @FXML
-    private void comboBoxOnAction(MouseEvent e) {
+    private void comboBoxOnAction(ActionEvent e) {
         clear();
-
-        int year    =   (yearComboBox.getValue() != null ? yearComboBox.getValue() : 0);
-        int quarter =   (quarterComboBox.getValue() != null ? quarterComboBox.getValue() : 0);
-
-        // TreeMap<Furniture, Integer> furnitureTreeMap = DBConnect.getFurnitureListByTime(int year, int quarter);
-        // TODO: delete the following line of code
-        TreeMap<Furniture, Integer> furnitureTreeMap = new TreeMap<>();
         
-        for (Furniture f : furnitureTreeMap.keySet()) {
-            furnitureObservableList.add(f);
-            furnitureQuantityObservableList.add(furnitureTreeMap.get(f));
+        if (yearComboBox.getSelectionModel().getSelectedItem() != null && quarterComboBox.getSelectionModel().getSelectedItem() != null) {    
+            int year    =   yearComboBox.getValue();
+            int quarter =   quarterComboBox.getValue();
+
+            HashMap<Furniture, Integer> furnitureTreeMap = DBConnect.getFurnitureTreeMapByTime(year, quarter);
+            for (Furniture f : furnitureTreeMap.keySet()) {
+                furnitureObservableList.add(f);
+                furnitureQuantityObservableList.add(furnitureTreeMap.get(f));
+            }
         }
     }
 
@@ -55,7 +60,19 @@ public class OrderHistoryController extends AbstractPageController {
         furnitureObservableList = FXCollections.observableArrayList();
         furnitureQuantityObservableList = FXCollections.observableArrayList();
 
-        comboBoxOnAction(null);
+        ObservableList<Integer> years = FXCollections.observableArrayList();
+        for (int i = DBConnect.getOldestYearQuarter().get(0) ; i <= LocalDate.now().getYear() ; ++i) {
+            years.add(i);
+        }
+        ObservableList<Integer> quarters = FXCollections.observableArrayList();
+        quarters.add(1);
+        quarters.add(2);
+        quarters.add(3);
+        quarters.add(4);
+
+        yearComboBox.getItems().setAll(years);
+        quarterComboBox.getItems().setAll(quarters);
+
         setUp();
     }
 
@@ -118,13 +135,13 @@ public class OrderHistoryController extends AbstractPageController {
                         break;
                     }
                 }
-                return new SimpleStringProperty(String.valueOf(arg0.getValue().getPrice() * quantity));
+                // return new SimpleStringProperty(String.valueOf(arg0.getValue().getPrice() * quantity));
+                return null;
             }
             
         });
     }
     
-
     private void clear() {
         furnitureObservableList.clear();
         furnitureQuantityObservableList.clear();
