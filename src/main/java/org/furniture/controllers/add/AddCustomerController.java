@@ -10,6 +10,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import org.furniture.models.Customer;
+import org.furniture.services.DBConnect;
 
 public class AddCustomerController extends AbstractPageController {
 
@@ -24,24 +26,31 @@ public class AddCustomerController extends AbstractPageController {
 
     @Override
     protected void initialize() {
-        clear();
+        idTextField.setText(String.valueOf((DBConnect.getCustomerLastID() + 1)));
     }
 
-    private void clear() {
-        idTextField.clear();
-        nameTextField.clear();
-        phoneTextField.clear();
-        addressTextArea.clear();
+    public void confirmButtonOnAction(ActionEvent actionEvent) throws IOException {
+        if (validation()) {
+            Customer customer = new Customer(idTextField.getText(),
+                    nameTextField.getText(),
+                    addressTextArea.getText(),
+                    phoneTextField.getText());
+            DBConnect.insertCustomer(customer);
+            UIManager.setPage(Page.CUSTOMERS_PAGE);
+        }
     }
+
 
     @FXML
-    private void addButtonOnAction(ActionEvent e) throws IOException {
-        // TODO: INSERT
+    public void cancelButtonOnAction(ActionEvent actionEvent) throws IOException {
         UIManager.setPage(Page.CUSTOMERS_PAGE);
     }
 
-    @FXML
-    private void cancelButtonOnAction(ActionEvent e) throws IOException {
-        UIManager.setPage(Page.CUSTOMERS_PAGE);
+    private boolean isInt(String str) {
+        return str.matches("\\d+");
+    }
+
+    private boolean validation(){
+        return true;
     }
 }
